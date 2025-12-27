@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { label: "Library", path: "/" },
@@ -45,14 +46,15 @@ export const Navigation = () => {
           ))}
         </div>
 
-        {/* Account */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Account & Theme Toggle */}
+        <div className="hidden md:flex items-center gap-6">
           <Link to="/shelf" className="link-archival">
             Shelf
           </Link>
           <button className="text-ui text-muted-foreground hover:text-foreground transition-colors">
             Account
           </button>
+          <ThemeToggle />
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -92,6 +94,9 @@ export const Navigation = () => {
               <button className="text-ui text-muted-foreground text-left">
                 Account
               </button>
+              <div className="pt-2">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
         </div>
