@@ -81,30 +81,30 @@
 
   .light {
     /* Parchment theme */
-    --background: 40 30% 94%;
-    --foreground: 240 4% 10%;
+    --background: 41 47% 93%;
+    --foreground: 240 16% 6%;
     
-    --card: 40 25% 90%;
-    --card-foreground: 240 4% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 16% 6%;
     
-    --popover: 40 25% 92%;
-    --popover-foreground: 240 4% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 16% 6%;
     
-    --primary: 240 4% 10%;
-    --primary-foreground: 40 30% 94%;
+    --primary: 240 13% 12%;
+    --primary-foreground: 41 47% 93%;
     
-    --secondary: 40 20% 85%;
-    --secondary-foreground: 240 4% 15%;
+    --secondary: 38 48% 91%;
+    --secondary-foreground: 240 16% 6%;
     
-    --muted: 40 15% 88%;
-    --muted-foreground: 240 4% 40%;
+    --muted: 38 48% 91%;
+    --muted-foreground: 240 7% 32%;
     
-    --accent: 43 55% 45%;
-    --accent-foreground: 40 30% 94%;
+    --accent: 240 13% 12%;
+    --accent-foreground: 41 47% 93%;
     
-    --border: 40 15% 80%;
-    --input: 40 15% 82%;
-    --ring: 43 55% 45%;
+    --border: 240 14% 7% / 0.12;
+    --input: 240 14% 7% / 0.12;
+    --ring: 240 13% 12%;
   }
 }
 
