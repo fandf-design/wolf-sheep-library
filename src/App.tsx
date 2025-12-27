@@ -3,7 +3,13 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import { Navigation } from "@/components/layout/Navigation";
+import Library from "./pages/Library";
+import Volume from "./pages/Volume";
+import Chapter from "./pages/Chapter";
+import Chronicle from "./pages/Chronicle";
+import Vault from "./pages/Vault";
+import Shelf from "./pages/Shelf";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -14,9 +20,14 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Navigation />
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/" element={<Library />} />
+          <Route path="/volume/:slug" element={<Volume />} />
+          <Route path="/volume/:volumeSlug/chapter/:chapterSlug" element={<Chapter />} />
+          <Route path="/chronicle" element={<Chronicle />} />
+          <Route path="/vault" element={<Vault />} />
+          <Route path="/shelf" element={<Shelf />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
