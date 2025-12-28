@@ -24,24 +24,33 @@ const Library = () => {
     <main className="min-h-screen pt-16">
       {/* Hero Section */}
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-charcoal/20" />
+        {/* Background with subtle grain texture */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/10" />
         
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-gold rounded-full" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 border border-gold rounded-full" />
+        {/* Archival grain overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.015] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          }}
+        />
+        
+        {/* Decorative editorial guide marks - extremely subtle */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-foreground/50 rounded-full" />
+          <div className="absolute bottom-1/3 right-1/3 w-48 h-48 border border-foreground/30 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-px bg-foreground/20" />
         </div>
 
         <div className="relative z-10 text-center px-6 page-enter">
-          <span className="text-meta mb-6 block">The Archive</span>
-          <h1 className="text-display-xl mb-6">
+          <span className="text-meta mb-6 block opacity-60">The Archive</span>
+          <h1 className="text-display-xl mb-6 text-foreground">
             The Library
           </h1>
-          <p className="text-body max-w-xl mx-auto text-muted-foreground leading-relaxed">
+          <p className="text-body max-w-xl mx-auto text-muted-foreground/70 leading-relaxed">
             Fashion as literature. Garments as artifacts. Collections as mythic volumes.
             <br />
-            <span className="text-gold/60">Wolf and sheep. Dominance and restraint.</span>
+            <span className="text-accent/40 font-light tracking-[0.15em] text-sm">Wolf and sheep. Dominance and restraint.</span>
           </p>
         </div>
       </section>
@@ -54,10 +63,10 @@ const Library = () => {
               <span className="text-meta block mb-2">Collection</span>
               <h2 className="text-display-md">Volumes</h2>
             </div>
-            <div className="hidden md:flex items-center gap-4 text-meta">
-              <span>Scroll to explore</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-gold/60">
-                <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1" />
+            <div className="hidden md:flex items-center gap-4 text-meta opacity-40">
+              <span className="tracking-[0.12em]">Scroll</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-muted-foreground animate-[drift_3s_ease-in-out_infinite]">
+                <path d="M5 12H19M19 12L14 7M19 12L14 17" stroke="currentColor" strokeWidth="0.75" />
               </svg>
             </div>
           </div>

@@ -7,19 +7,13 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center gap-2 px-3 py-1.5 text-ui text-muted-foreground hover:text-foreground transition-colors border border-border hover:border-accent/30 bg-card/50"
+      className="flex items-center gap-1.5 p-2 text-muted-foreground/50 hover:text-muted-foreground transition-colors"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (
-        <>
-          <Moon className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Dark</span>
-        </>
+        <Moon className="w-4 h-4" />
       ) : (
-        <>
-          <Sun className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Light</span>
-        </>
+        <Sun className="w-4 h-4" />
       )}
     </button>
   );
