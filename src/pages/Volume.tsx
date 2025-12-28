@@ -25,7 +25,7 @@ const Volume = () => {
         
         {/* Decorative Circle */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-5">
-          <svg viewBox="0 0 600 600" fill="none" className="w-full h-full text-gold">
+          <svg viewBox="0 0 600 600" fill="none" className="w-full h-full text-accent">
             <circle cx="300" cy="300" r="298" stroke="currentColor" strokeWidth="0.5" />
             <circle cx="300" cy="300" r="250" stroke="currentColor" strokeWidth="0.5" />
             <circle cx="300" cy="300" r="200" stroke="currentColor" strokeWidth="0.5" />
@@ -37,11 +37,11 @@ const Volume = () => {
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto page-enter">
           {/* Breadcrumb */}
           <div className="mb-8">
-            <Link to="/" className="text-meta text-muted-foreground hover:text-gold transition-colors">
+            <Link to="/" className="text-meta text-muted-foreground hover:text-accent transition-colors">
               Library
             </Link>
             <span className="text-meta text-muted-foreground mx-3">/</span>
-            <span className="text-meta text-gold/60">Volume {volume.number}</span>
+            <span className="text-meta text-accent/60">Volume {volume.number}</span>
           </div>
 
           <h1 className="text-display-xl mb-6">
@@ -52,8 +52,8 @@ const Volume = () => {
             {volume.subtitle}
           </p>
           
-          <div className="inline-block px-4 py-2 border border-gold/30 mt-6">
-            <span className="text-ui text-gold/80">{volume.tension}</span>
+          <div className="inline-block px-4 py-2 border border-accent/30 mt-6">
+            <span className="text-ui text-accent/80">{volume.tension}</span>
           </div>
         </div>
       </section>
@@ -86,21 +86,21 @@ const Volume = () => {
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-3">
-                      <span className="text-meta text-gold/60">
+                      <span className="text-meta text-accent/60">
                         Chapter {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className={`text-meta px-2 py-0.5 ${
                         chapter.status === "published" 
                           ? "bg-charcoal text-foreground"
                           : chapter.status === "upcoming"
-                          ? "border border-gold/30 text-gold/80"
+                          ? "border border-accent/30 text-accent/80"
                           : "border border-muted-foreground/30 text-muted-foreground"
                       }`}>
                         {chapter.status === "out-of-print" ? "Out of Print" : chapter.status}
                       </span>
                     </div>
                     
-                    <h3 className="text-display-md text-foreground group-hover:text-gold transition-colors mb-2">
+                    <h3 className="text-display-md text-foreground group-hover:text-accent transition-colors mb-2">
                       {chapter.title}
                     </h3>
                     
@@ -131,7 +131,7 @@ const Volume = () => {
               className="group"
             >
               <span className="text-meta text-muted-foreground block mb-2">Previous Volume</span>
-              <span className="text-display-md text-foreground group-hover:text-gold transition-colors">
+              <span className="text-display-md text-foreground group-hover:text-accent transition-colors">
                 {volumes[volumes.findIndex(v => v.slug === volume.slug) - 1].title}
               </span>
             </Link>
@@ -145,7 +145,7 @@ const Volume = () => {
               className="group text-right"
             >
               <span className="text-meta text-muted-foreground block mb-2">Next Volume</span>
-              <span className="text-display-md text-foreground group-hover:text-gold transition-colors">
+              <span className="text-display-md text-foreground group-hover:text-accent transition-colors">
                 {volumes[volumes.findIndex(v => v.slug === volume.slug) + 1].title}
               </span>
             </Link>
