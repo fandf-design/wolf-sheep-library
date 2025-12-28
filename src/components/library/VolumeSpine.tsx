@@ -35,19 +35,19 @@ export const VolumeSpine = ({
     <>
       {/* Volume Number */}
       <div className="absolute top-6 left-6 flex items-center gap-2">
-        <span className={`text-meta ${isAccessible ? 'text-accent/60' : 'text-muted-foreground/40'}`}>
+        <span className={`text-meta ${isAccessible ? 'text-accent/70' : 'text-muted-foreground/30'}`}>
           Volume {number}
         </span>
         {!isAccessible && (
-          <Lock className="w-3 h-3 text-muted-foreground/40" />
+          <Lock className="w-2.5 h-2.5 text-muted-foreground/25" />
         )}
       </div>
 
-      {/* Locked Badge */}
+      {/* Locked indicator - quiet, informational */}
       {!isAccessible && (
         <div className="absolute top-6 right-6">
-          <span className="text-meta px-2 py-0.5 rounded-full bg-muted text-muted-foreground text-[10px] uppercase tracking-wider">
-            Locked
+          <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35 font-light">
+            Archived
           </span>
         </div>
       )}
@@ -102,7 +102,7 @@ export const VolumeSpine = ({
       <>
         <div 
           onClick={handleClick}
-          className="volume-spine group cursor-pointer flex-shrink-0 opacity-70 hover:opacity-80 transition-opacity"
+          className="volume-spine volume-spine--archived group cursor-pointer flex-shrink-0 opacity-50 hover:opacity-60 transition-opacity"
           style={{ animationDelay: `${index * 100}ms` }}
         >
           {spineContent}

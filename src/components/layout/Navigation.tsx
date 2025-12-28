@@ -38,7 +38,11 @@ export const Navigation = () => {
               key={item.path}
               to={item.path}
               className={`link-archival ${
-                location.pathname === item.path ? "text-foreground" : ""
+                location.pathname === item.path 
+                  ? "text-foreground" 
+                  : item.label === "Library" 
+                    ? "text-muted-foreground/90" 
+                    : "text-muted-foreground/70"
               }`}
             >
               {item.label}
@@ -48,10 +52,10 @@ export const Navigation = () => {
 
         {/* Account & Theme Toggle */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/shelf" className="link-archival">
+          <Link to="/shelf" className="link-archival opacity-70">
             Shelf
           </Link>
-          <button className="text-ui text-muted-foreground hover:text-foreground transition-colors">
+          <button className="text-ui text-muted-foreground/60 hover:text-muted-foreground transition-colors">
             Account
           </button>
           <ThemeToggle />
