@@ -1,39 +1,35 @@
 import { VolumeSpine } from "@/components/library/VolumeSpine";
 import { volumes } from "@/data/volumes";
 import { useEffect, useRef, useState } from "react";
-
 const Library = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => {
       if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        const {
+          scrollLeft,
+          scrollWidth,
+          clientWidth
+        } = scrollRef.current;
         const progress = scrollLeft / (scrollWidth - clientWidth);
         setScrollProgress(progress);
       }
     };
-
     const scrollEl = scrollRef.current;
     scrollEl?.addEventListener("scroll", handleScroll);
     return () => scrollEl?.removeEventListener("scroll", handleScroll);
   }, []);
-
-  return (
-    <main className="min-h-screen pt-16">
+  return <main className="min-h-screen pt-16">
       {/* Hero Section */}
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
         {/* Background with subtle grain texture */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/10" />
         
         {/* Archival grain overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.015] pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          }}
-        />
+        <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+      }} />
         
         {/* Decorative editorial guide marks - extremely subtle */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
@@ -43,7 +39,7 @@ const Library = () => {
         </div>
 
         <div className="relative z-10 text-center px-6 page-enter">
-          <span className="text-meta mb-6 block opacity-60">The Archive</span>
+          
           <h1 className="text-display-xl mb-6 text-foreground">
             The Library
           </h1>
@@ -73,21 +69,8 @@ const Library = () => {
         </div>
 
         {/* Horizontal Scroll Container */}
-        <div 
-          ref={scrollRef}
-          className="scroll-horizontal gap-6 px-6 md:px-12 pb-8"
-        >
-          {volumes.map((volume, index) => (
-            <VolumeSpine
-              key={volume.slug}
-              number={volume.number}
-              title={volume.title}
-              subtitle={volume.subtitle}
-              tension={volume.tension}
-              slug={volume.slug}
-              index={index}
-            />
-          ))}
+        <div ref={scrollRef} className="scroll-horizontal gap-6 px-6 md:px-12 pb-8">
+          {volumes.map((volume, index) => <VolumeSpine key={volume.slug} number={volume.number} title={volume.title} subtitle={volume.subtitle} tension={volume.tension} slug={volume.slug} index={index} />)}
           
           {/* End Spacer */}
           <div className="flex-shrink-0 w-12 md:w-24" />
@@ -96,10 +79,9 @@ const Library = () => {
         {/* Scroll Progress Indicator */}
         <div className="px-6 md:px-12 mt-8">
           <div className="h-px bg-border relative max-w-md">
-            <div 
-              className="absolute top-0 left-0 h-px bg-gold transition-all duration-300"
-              style={{ width: `${scrollProgress * 100}%` }}
-            />
+            <div className="absolute top-0 left-0 h-px bg-gold transition-all duration-300" style={{
+            width: `${scrollProgress * 100}%`
+          }} />
           </div>
         </div>
       </section>
@@ -157,8 +139,6 @@ const Library = () => {
           </div>
         </div>
       </footer>
-    </main>
-  );
+    </main>;
 };
-
 export default Library;
