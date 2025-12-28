@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { volumes, Issue } from "@/data/volumes";
+import { IssueStatusBadge, IssueCTAButton, AlertMeModal } from "@/components/issue";
+import type { IssueStatus } from "@/types/issue-status";
 
-// Sample issues for demonstration
+// Sample issues with unified status system
 const sampleIssues: Issue[] = [
   {
     id: "alpha-coat-001",
@@ -12,7 +15,7 @@ const sampleIssues: Issue[] = [
     edition: "037/100",
     material: "Wool-Cashmere Blend",
     role: "Wolf",
-    status: "Low Stock",
+    status: "limited",
     price: 2400,
     images: [],
     chapterSlug: "alpha-principle"
@@ -26,7 +29,7 @@ const sampleIssues: Issue[] = [
     edition: "Open Edition",
     material: "Fine Merino Wool",
     role: "Sheep",
-    status: "Circulating",
+    status: "acquire",
     price: 890,
     images: [],
     chapterSlug: "omega-rest"
@@ -40,19 +43,64 @@ const sampleIssues: Issue[] = [
     edition: "Limited — 24hr Drop",
     material: "Mulberry Silk",
     role: "Wolf",
-    status: "Vaulted",
+    status: "vaulted",
     price: 680,
     images: [],
     chapterSlug: "the-hunt"
+  },
+  {
+    id: "shearing-wrap-001",
+    title: "The Aftermath Wrap",
+    story: "What remains after you've given everything away? This wrap is both shield and surrender, designed for the moment between ending and beginning.",
+    fabricNotes: "Lightweight cashmere blend. Intentionally unfinished edges.",
+    craftsmanship: "Single-piece construction. No seams, no closures, only drape.",
+    edition: "Pre-Order",
+    material: "Cashmere Blend",
+    role: "Sheep",
+    status: "reserve",
+    price: 1200,
+    images: [],
+    chapterSlug: "after-shearing"
+  },
+  {
+    id: "nocturne-cloak-001",
+    title: "Midnight Wanderer Cloak",
+    story: "For the insomniac, the wanderer, the one who finds peace only in empty streets at 3am. This cloak was designed to disappear into darkness.",
+    fabricNotes: "Matte black wool. Interior lined with deep navy silk.",
+    craftsmanship: "Hand-stitched hem. Weighted corners for dramatic drape.",
+    edition: "Temporarily Unavailable",
+    material: "Wool-Silk",
+    role: "Wolf",
+    status: "alert",
+    price: 1800,
+    images: [],
+    chapterSlug: "solitary-passage"
   }
 ];
 
 const Chapter = () => {
   const { volumeSlug, chapterSlug } = useParams();
+  const [alertModalOpen, setAlertModalOpen] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
   
   const volume = volumes.find(v => v.slug === volumeSlug);
   const chapter = volume?.chapters.find(c => c.slug === chapterSlug);
   const issues = sampleIssues.filter(i => i.chapterSlug === chapterSlug);
+
+  const handleAlertMe = (issue: Issue) => {
+    setSelectedIssue(issue);
+    setAlertModalOpen(true);
+  };
+
+  const handleAcquire = (issue: Issue) => {
+    // TODO: Add to cart logic
+    console.log("Acquiring:", issue.title);
+  };
+
+  const handleReserve = (issue: Issue) => {
+    // TODO: Reservation/preorder flow
+    console.log("Reserving:", issue.title);
+  };
 
   if (!volume || !chapter) {
     return (
@@ -76,22 +124,22 @@ const Chapter = () => {
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto page-enter">
           {/* Breadcrumb */}
           <div className="mb-8">
-            <Link to="/" className="text-meta text-muted-foreground hover:text-gold transition-colors">
+            <Link to="/" className="text-meta text-muted-foreground hover:text-accent transition-colors">
               Library
             </Link>
             <span className="text-meta text-muted-foreground mx-3">/</span>
-            <Link to={`/volume/${volume.slug}`} className="text-meta text-muted-foreground hover:text-gold transition-colors">
+            <Link to={`/volume/${volume.slug}`} className="text-meta text-muted-foreground hover:text-accent transition-colors">
               {volume.title}
             </Link>
             <span className="text-meta text-muted-foreground mx-3">/</span>
-            <span className="text-meta text-gold/60">Chapter {String(chapterIndex + 1).padStart(2, "0")}</span>
+            <span className="text-meta text-accent/60">Chapter {String(chapterIndex + 1).padStart(2, "0")}</span>
           </div>
 
           <span className={`inline-block text-meta px-3 py-1 mb-6 ${
             chapter.status === "published" 
               ? "bg-charcoal text-foreground"
               : chapter.status === "upcoming"
-              ? "border border-gold/30 text-gold/80"
+              ? "border border-accent/30 text-accent/80"
               : "border border-muted-foreground/30 text-muted-foreground"
           }`}>
             {chapter.status === "out-of-print" ? "Out of Print" : chapter.status}
@@ -117,8 +165,8 @@ const Chapter = () => {
             {chapter.narrativeArc}
           </p>
           
-          <div className="border-l-2 border-gold/30 pl-6">
-            <span className="text-meta text-gold/60 block mb-2">Drop Logic</span>
+          <div className="border-l-2 border-accent/30 pl-6">
+            <span className="text-meta text-accent/60 block mb-2">Drop Logic</span>
             <p className="text-body text-muted-foreground">
               {chapter.dropLogic}
             </p>
@@ -154,13 +202,7 @@ const Chapter = () => {
                         }`}>
                           {issue.role}
                         </span>
-                        <span className={`${
-                          issue.status === "Circulating" ? "status-circulating" :
-                          issue.status === "Low Stock" ? "status-low-stock" :
-                          "status-vaulted"
-                        }`}>
-                          {issue.status}
-                        </span>
+                        <IssueStatusBadge status={issue.status} />
                       </div>
                       
                       <h3 className="text-display-md text-foreground mb-4">
@@ -184,21 +226,24 @@ const Chapter = () => {
                       </div>
                       
                       {/* Price & Action */}
-                      {issue.status !== "Vaulted" ? (
+                      {issue.status !== "vaulted" ? (
                         <div className="flex items-center justify-between">
                           <span className="text-display text-xl text-foreground">
                             ${issue.price.toLocaleString()}
                           </span>
-                          <button className="px-8 py-3 bg-foreground text-background text-ui hover:bg-gold transition-colors">
-                            {issue.status === "Pre-Order" ? "Pre-Order" : "Acquire"}
-                          </button>
+                          <IssueCTAButton
+                            status={issue.status}
+                            onAcquire={() => handleAcquire(issue)}
+                            onReserve={() => handleReserve(issue)}
+                            onAlertMe={() => handleAlertMe(issue)}
+                          />
                         </div>
                       ) : (
                         <div className="flex items-center justify-between">
                           <span className="text-body text-muted-foreground italic">
                             This issue has entered the Vault
                           </span>
-                          <Link to="/vault" className="text-ui text-gold/80 hover:text-gold transition-colors">
+                          <Link to="/vault" className="text-ui text-accent/80 hover:text-accent transition-colors">
                             View in Vault →
                           </Link>
                         </div>
@@ -217,13 +262,23 @@ const Chapter = () => {
         <div className="max-w-5xl mx-auto">
           <Link 
             to={`/volume/${volume.slug}`}
-            className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-gold transition-colors"
+            className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-accent transition-colors"
           >
             <span>←</span>
             <span>Back to {volume.title}</span>
           </Link>
         </div>
       </section>
+
+      {/* Alert Me Modal */}
+      {selectedIssue && (
+        <AlertMeModal
+          open={alertModalOpen}
+          onOpenChange={setAlertModalOpen}
+          productId={selectedIssue.id}
+          productTitle={selectedIssue.title}
+        />
+      )}
     </main>
   );
 };

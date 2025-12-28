@@ -45,15 +45,15 @@ const Shelf = () => {
           
           <div className="flex flex-wrap gap-4">
             {hasDualistBadge && (
-              <div className="flex items-center gap-3 px-5 py-3 border border-gold/40 bg-gold/5">
-                <div className="w-8 h-8 rounded-full border border-gold/60 flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-gold">
+              <div className="flex items-center gap-3 px-5 py-3 border border-accent/40 bg-accent/5">
+                <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-accent">
                     <circle cx="6" cy="8" r="4" stroke="currentColor" strokeWidth="1" />
                     <circle cx="10" cy="8" r="4" stroke="currentColor" strokeWidth="1" />
                   </svg>
                 </div>
                 <div>
-                  <span className="text-ui text-gold block">Dualist</span>
+                  <span className="text-ui text-accent block">Dualist</span>
                   <span className="text-meta text-muted-foreground">Wolf & Sheep from Dominion</span>
                 </div>
               </div>
@@ -90,7 +90,7 @@ const Shelf = () => {
               {collectedIssues.map((issue) => (
                 <article 
                   key={issue.id}
-                  className="group border border-border p-6 hover:border-gold/30 transition-colors"
+                  className="group border border-border p-6 hover:border-accent/30 transition-colors"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
@@ -111,7 +111,7 @@ const Shelf = () => {
                     </div>
                     
                     <div className="text-right">
-                      <span className="text-meta text-gold/60 block">Edition {issue.edition}</span>
+                      <span className="text-meta text-accent/60 block">Edition {issue.edition}</span>
                       <span className="text-meta text-muted-foreground">Acquired {issue.purchaseDate}</span>
                     </div>
                   </div>
@@ -146,7 +146,7 @@ const Shelf = () => {
             <div className="border border-border p-6">
               <span className="text-ui text-muted-foreground block mb-4">Shipping Address</span>
               <p className="text-body-sm text-muted-foreground">No address on file</p>
-              <button className="mt-4 text-ui text-gold/80 hover:text-gold transition-colors">
+              <button className="mt-4 text-ui text-accent/80 hover:text-accent transition-colors">
                 Add Address
               </button>
             </div>

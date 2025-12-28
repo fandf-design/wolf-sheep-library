@@ -18,6 +18,8 @@ export interface Chapter {
   slug: string;
 }
 
+import type { IssueStatus } from "@/types/issue-status";
+
 export interface Issue {
   id: string;
   title: string;
@@ -27,7 +29,7 @@ export interface Issue {
   edition: string;
   material: string;
   role: "Wolf" | "Sheep" | "Dual";
-  status: "Circulating" | "Low Stock" | "Vaulted" | "Auction Only" | "Pre-Order";
+  status: IssueStatus;
   price: number;
   images: string[];
   chapterSlug: string;

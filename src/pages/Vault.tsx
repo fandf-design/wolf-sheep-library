@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IssueStatusBadge } from "@/components/issue";
 
 interface VaultedIssue {
   id: string;
@@ -93,11 +94,11 @@ const Vault = () => {
                 className="group relative border border-border p-8 bg-gradient-to-br from-charcoal/30 to-transparent opacity-70 hover:opacity-100 transition-opacity"
               >
                 {/* Holographic Effect Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 
-                {/* Vaulted Badge */}
+                {/* Vaulted Badge - using unified component */}
                 <div className="absolute top-4 right-4">
-                  <span className="status-vaulted">Vaulted</span>
+                  <IssueStatusBadge status="vaulted" />
                 </div>
 
                 <div className="relative z-10">
@@ -112,19 +113,19 @@ const Vault = () => {
                     <p className="text-body-sm text-muted-foreground">{issue.chapter}</p>
                   </div>
 
-                  {/* Vote Section */}
+                  {/* Vote Section - NO CTA for vaulted, only vote for reprint petition */}
                   <div className="flex items-center justify-between pt-6 border-t border-border/50">
                     <div>
                       <span className="text-meta text-muted-foreground">Reprint Votes</span>
-                      <span className="text-display text-xl ml-3 text-gold/80">{issue.votes.toLocaleString()}</span>
+                      <span className="text-display text-xl ml-3 text-accent/80">{issue.votes.toLocaleString()}</span>
                     </div>
                     
                     <button
                       onClick={() => handleVote(issue.id)}
                       className={`px-4 py-2 text-ui transition-all ${
                         issue.hasVoted 
-                          ? "bg-gold/20 text-gold border border-gold/30" 
-                          : "bg-transparent border border-border text-muted-foreground hover:border-gold/50 hover:text-foreground"
+                          ? "bg-accent/20 text-accent border border-accent/30" 
+                          : "bg-transparent border border-border text-muted-foreground hover:border-accent/50 hover:text-foreground"
                       }`}
                     >
                       {issue.hasVoted ? "Voted" : "Vote"}

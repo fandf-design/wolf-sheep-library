@@ -316,26 +316,11 @@
     width: 100%;
   }
   
-  /* Status Badges */
-  .status-circulating {
-    @apply text-meta px-3 py-1;
-    background: hsl(var(--charcoal));
-    color: hsl(var(--bone));
-  }
-  
-  .status-vaulted {
-    @apply text-meta px-3 py-1;
-    background: transparent;
-    border: 1px solid hsl(var(--muted-foreground) / 0.3);
-    color: hsl(var(--muted-foreground));
-  }
-  
-  .status-low-stock {
-    @apply text-meta px-3 py-1;
-    background: hsl(var(--gold) / 0.15);
-    color: hsl(var(--gold));
-    border: 1px solid hsl(var(--gold) / 0.3);
-  }
+  /* Unified Issue Status System
+   * All status styling is handled by IssueStatusBadge component
+   * Forbidden terms: "out of stock", "low stock", "only X left", 
+   * "sold out", "backorder", "preorder", countdowns, scarcity bars
+   */
 }
 
 /* Custom Scrollbar for larger containers */
