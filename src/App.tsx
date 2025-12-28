@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigation } from "@/components/layout/Navigation";
 import { ThemeProvider } from "@/hooks/use-theme";
+import { VolumeGuard, ChapterGuard } from "@/components/guards/VolumeGuard";
 import Library from "./pages/Library";
 import Volume from "./pages/Volume";
 import Chapter from "./pages/Chapter";
@@ -25,8 +26,22 @@ const App = () => (
           <Navigation />
           <Routes>
             <Route path="/" element={<Library />} />
-            <Route path="/volume/:slug" element={<Volume />} />
-            <Route path="/volume/:volumeSlug/chapter/:chapterSlug" element={<Chapter />} />
+            <Route 
+              path="/volume/:slug" 
+              element={
+                <VolumeGuard>
+                  <Volume />
+                </VolumeGuard>
+              } 
+            />
+            <Route 
+              path="/volume/:volumeSlug/chapter/:chapterSlug" 
+              element={
+                <ChapterGuard>
+                  <Chapter />
+                </ChapterGuard>
+              } 
+            />
             <Route path="/chronicle" element={<Chronicle />} />
             <Route path="/vault" element={<Vault />} />
             <Route path="/shelf" element={<Shelf />} />
