@@ -115,7 +115,7 @@ const Shelf = () => {
       <section className="py-24 px-6 md:px-12 border-b border-border">
         <div className="max-w-4xl mx-auto page-enter">
           <span className="text-meta block mb-6">Your Archive</span>
-          <h1 className="text-display-xl mb-6">The Collector's Shelf</h1>
+          <h1 className="text-display-xl mb-6">The Shelf</h1>
           <p className="text-body text-lg text-muted-foreground max-w-2xl">
             Every Issue you've acquired becomes part of your personal mythology.
             Your collection tells a story about the tensions you embody.
