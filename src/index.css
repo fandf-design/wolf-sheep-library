@@ -80,33 +80,40 @@
   }
 
   .light {
-    /* Parchment theme (refined) */
+    /* Parchment background stays bright */
     --background: 40 28% 96%;
-    --foreground: 240 6% 12%;
+    --surface: 40 24% 94%;
     
+    /* Main ink — deeper, cooler, readable */
+    --foreground: 240 8% 14%;
+    
+    /* Cards and containers */
     --card: 40 22% 92%;
-    --card-foreground: 240 6% 12%;
+    --card-foreground: 240 8% 14%;
     
     --popover: 40 24% 94%;
-    --popover-foreground: 240 6% 12%;
+    --popover-foreground: 240 8% 14%;
     
-    --primary: 240 6% 12%;
+    /* Primary text (titles, nav, headlines) */
+    --primary: 240 8% 14%;
     --primary-foreground: 40 28% 96%;
     
+    /* Secondary UI surfaces */
     --secondary: 40 18% 88%;
-    --secondary-foreground: 240 6% 18%;
+    --secondary-foreground: 240 7% 22%;
     
-    /* Muted should feel like cool ink on warm paper (not tan-on-tan) */
+    /* Muted text — must still be readable */
     --muted: 40 14% 90%;
-    --muted-foreground: 240 5% 38%;
+    --muted-foreground: 240 6% 34%;
     
-    /* Accent gold: less brassy, more "muted bullion" */
-    --accent: 43 40% 38%;
+    /* Accent gold — deeper, less chalky */
+    --accent: 43 38% 36%;
     --accent-foreground: 40 28% 96%;
     
-    --border: 240 4% 82%;
-    --input: 240 4% 84%;
-    --ring: 43 40% 38%;
+    /* Structural lines */
+    --border: 240 5% 80%;
+    --input: 240 5% 82%;
+    --ring: 43 38% 36%;
   }
 }
 
@@ -183,7 +190,7 @@
   .text-meta {
     font-family: var(--font-body);
     font-weight: 300;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     font-size: 0.6875rem;
     text-transform: uppercase;
     color: hsl(var(--muted-foreground));
