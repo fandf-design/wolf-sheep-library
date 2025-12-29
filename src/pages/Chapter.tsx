@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { volumes, Issue } from "@/data/volumes";
 import { IssueStatusBadge, IssueCTAButton, AlertMeModal } from "@/components/issue";
+import { WishlistButton } from "@/components/shelf";
 import type { IssueStatus } from "@/types/issue-status";
 
 // Sample issues with unified status system
@@ -194,17 +195,23 @@ const Chapter = () => {
                     
                     {/* Content */}
                     <div className="flex flex-col justify-center">
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className={`text-meta px-2 py-0.5 ${
-                          issue.role === "Wolf" 
-                            ? "bg-charcoal text-foreground" 
-                            : "bg-bone/10 text-bone"
-                        }`}>
-                          {issue.role}
-                        </span>
-                        <IssueStatusBadge status={issue.status} />
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <span className={`text-meta px-2 py-0.5 ${
+                            issue.role === "Wolf" 
+                              ? "bg-charcoal text-foreground" 
+                              : "bg-bone/10 text-bone"
+                          }`}>
+                            {issue.role}
+                          </span>
+                          <IssueStatusBadge status={issue.status} />
+                        </div>
+                        <WishlistButton 
+                          issueId={issue.id} 
+                          issueTitle={issue.title}
+                          variant="compact"
+                        />
                       </div>
-                      
                       <h3 className="text-display-md text-foreground mb-4">
                         {issue.title}
                       </h3>

@@ -8,6 +8,7 @@ interface IssueCTAButtonProps {
   onAlertMe?: () => void;
   className?: string;
   disabled?: boolean;
+  size?: "default" | "sm";
 }
 
 /**
@@ -24,6 +25,7 @@ export const IssueCTAButton = ({
   onAlertMe,
   className,
   disabled = false,
+  size = "default",
 }: IssueCTAButtonProps) => {
   const config = getStatusConfig(status);
   
@@ -52,9 +54,10 @@ export const IssueCTAButton = ({
       onClick={handleClick}
       disabled={disabled}
       className={cn(
-        "px-8 py-3 text-ui transition-colors",
+        "text-ui transition-colors",
         "bg-foreground text-background hover:bg-accent hover:text-accent-foreground",
         "disabled:opacity-50 disabled:cursor-not-allowed",
+        size === "sm" ? "px-5 py-2 text-sm" : "px-8 py-3",
         className
       )}
     >
