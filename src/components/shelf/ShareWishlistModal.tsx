@@ -48,7 +48,7 @@ export const ShareWishlistModal = ({ open, onOpenChange }: ShareWishlistModalPro
           <DialogTitle className="text-display-md">Share Wishlist</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6 pt-4">
+        <div className="space-y-6 pt-4 overflow-hidden">
           {!shareEnabled ? (
             <>
               <p className="text-body-sm text-muted-foreground">
@@ -66,22 +66,22 @@ export const ShareWishlistModal = ({ open, onOpenChange }: ShareWishlistModalPro
             </>
           ) : (
             <>
-              <div className="space-y-3">
+              <div className="space-y-3 overflow-hidden">
                 <span className="text-meta text-muted-foreground block">Your Share Link</span>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 px-3 py-2 bg-charcoal/30 border border-border text-body-sm text-foreground/80 truncate">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex-1 min-w-0 px-3 py-2 bg-charcoal/30 border border-border text-body-sm text-foreground/80 truncate overflow-hidden">
                     {shareUrl}
                   </div>
                   <button
                     onClick={handleCopyLink}
-                    className="px-4 py-2 border border-border text-ui text-muted-foreground hover:text-foreground hover:border-muted-foreground/50 transition-colors"
+                    className="shrink-0 px-4 py-2 border border-border text-ui text-muted-foreground hover:text-foreground hover:border-muted-foreground/50 transition-colors"
                   >
                     {copied ? "Copied" : "Copy"}
                   </button>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <button
                   onClick={handleRegenerateToken}
                   className="flex items-center gap-1.5 text-meta text-muted-foreground/60 hover:text-muted-foreground transition-colors"
