@@ -64,65 +64,58 @@ const issuesDatabase: Record<string, {
 };
 
 // Mock acquired issues (would come from order history)
-const acquiredIssues = [
-  {
-    id: "alpha-coat-001",
-    acquisitionDate: "March 2024",
-    edition: "037/100"
-  },
-  {
-    id: "omega-shroud-001",
-    acquisitionDate: "April 2024",
-    edition: "089/100"
-  }
-];
-
+const acquiredIssues = [{
+  id: "alpha-coat-001",
+  acquisitionDate: "March 2024",
+  edition: "037/100"
+}, {
+  id: "omega-shroud-001",
+  acquisitionDate: "April 2024",
+  edition: "089/100"
+}];
 const Shelf = () => {
   const [activeTab, setActiveTab] = useState<"acquired" | "wishlist">("acquired");
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [alertModalOpen, setAlertModalOpen] = useState(false);
-  const [selectedIssue, setSelectedIssue] = useState<{ id: string; title: string } | null>(null);
-  
-  const { items: wishlistItems, removeFromWishlist } = useWishlist();
+  const [selectedIssue, setSelectedIssue] = useState<{
+    id: string;
+    title: string;
+  } | null>(null);
+  const {
+    items: wishlistItems,
+    removeFromWishlist
+  } = useWishlist();
 
   // Get full issue data for acquired items
-  const acquiredData = acquiredIssues
-    .map(acquired => {
-      const issue = issuesDatabase[acquired.id];
-      if (!issue) return null;
-      return {
-        ...issue,
-        acquisitionDate: acquired.acquisitionDate
-      };
-    })
-    .filter(Boolean) as Array<typeof issuesDatabase[string] & { acquisitionDate: string }>;
+  const acquiredData = acquiredIssues.map(acquired => {
+    const issue = issuesDatabase[acquired.id];
+    if (!issue) return null;
+    return {
+      ...issue,
+      acquisitionDate: acquired.acquisitionDate
+    };
+  }).filter(Boolean) as Array<typeof issuesDatabase[string] & {
+    acquisitionDate: string;
+  }>;
 
   // Get full issue data for wishlist items
-  const wishlistData = wishlistItems
-    .map(item => issuesDatabase[item.issueId])
-    .filter(Boolean);
+  const wishlistData = wishlistItems.map(item => issuesDatabase[item.issueId]).filter(Boolean);
 
   // Check for Dualist badge (Wolf & Sheep from same volume)
-  const hasDualistBadge = acquiredData.some(i => i.role === "Wolf") && 
-                          acquiredData.some(i => i.role === "Sheep") &&
-                          acquiredData.filter(i => i.role === "Wolf").some(wolf =>
-                            acquiredData.filter(i => i.role === "Sheep").some(
-                              sheep => sheep.volumeTitle === wolf.volumeTitle
-                            )
-                          );
-
-  const handleAlertMe = (issue: { id: string; title: string }) => {
+  const hasDualistBadge = acquiredData.some(i => i.role === "Wolf") && acquiredData.some(i => i.role === "Sheep") && acquiredData.filter(i => i.role === "Wolf").some(wolf => acquiredData.filter(i => i.role === "Sheep").some(sheep => sheep.volumeTitle === wolf.volumeTitle));
+  const handleAlertMe = (issue: {
+    id: string;
+    title: string;
+  }) => {
     setSelectedIssue(issue);
     setAlertModalOpen(true);
   };
-
-  return (
-    <main className="min-h-screen pt-16">
+  return <main className="min-h-screen pt-16">
       {/* Header */}
       <section className="py-24 px-6 md:px-12 border-b border-border">
         <div className="max-w-4xl mx-auto page-enter">
           <span className="text-meta block mb-6">Your Archive</span>
-          <h1 className="text-display-xl mb-6">Shelf</h1>
+          <h1 className="text-display-xl mb-6">The Collector's Shelf</h1>
           <p className="text-body text-lg text-muted-foreground max-w-2xl">
             Every Issue you've acquired becomes part of your personal mythology.
             Your collection tells a story about the tensions you embody.
@@ -131,8 +124,7 @@ const Shelf = () => {
       </section>
 
       {/* Badges Section */}
-      {hasDualistBadge && (
-        <section className="py-12 px-6 md:px-12 border-b border-border bg-charcoal/10">
+      {hasDualistBadge && <section className="py-12 px-6 md:px-12 border-b border-border bg-charcoal/10">
           <div className="max-w-4xl mx-auto">
             <span className="text-meta block mb-6">Distinctions</span>
             
@@ -151,86 +143,47 @@ const Shelf = () => {
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </section>}
 
       {/* Tabs & Content */}
       <section className="py-16 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <ShelfTabs
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              acquiredCount={acquiredData.length}
-              wishlistCount={wishlistData.length}
-            />
+            <ShelfTabs activeTab={activeTab} onTabChange={setActiveTab} acquiredCount={acquiredData.length} wishlistCount={wishlistData.length} />
             
-            {activeTab === "wishlist" && wishlistData.length > 0 && (
-              <button
-                onClick={() => setShareModalOpen(true)}
-                className="flex items-center gap-2 text-meta text-muted-foreground/60 hover:text-muted-foreground transition-colors"
-              >
+            {activeTab === "wishlist" && wishlistData.length > 0 && <button onClick={() => setShareModalOpen(true)} className="flex items-center gap-2 text-meta text-muted-foreground/60 hover:text-muted-foreground transition-colors">
                 <Share2 className="w-3.5 h-3.5" />
                 Share Wishlist
-              </button>
-            )}
+              </button>}
           </div>
 
           {/* Acquired Tab */}
-          {activeTab === "acquired" && (
-            <>
-              {acquiredData.length > 0 ? (
-                <div className="space-y-4">
-                  {acquiredData.map((issue) => (
-                    <IssueCardCompact
-                      key={issue.id}
-                      issue={issue}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-24 border border-border">
+          {activeTab === "acquired" && <>
+              {acquiredData.length > 0 ? <div className="space-y-4">
+                  {acquiredData.map(issue => <IssueCardCompact key={issue.id} issue={issue} />)}
+                </div> : <div className="text-center py-24 border border-border">
                   <p className="text-body text-muted-foreground mb-6">
                     Your shelf awaits its first artifact.
                   </p>
                   <Link to="/" className="link-archival">
                     Enter the Library
                   </Link>
-                </div>
-              )}
-            </>
-          )}
+                </div>}
+            </>}
 
           {/* Wishlist Tab */}
-          {activeTab === "wishlist" && (
-            <>
-              {wishlistData.length > 0 ? (
-                <div className="space-y-4">
-                  {wishlistData.map((issue) => (
-                    <IssueCardCompact
-                      key={issue.id}
-                      issue={issue}
-                      showRemoveButton
-                      showCTA
-                      onRemove={() => removeFromWishlist(issue.id)}
-                      onAcquire={() => console.log("Acquire:", issue.title)}
-                      onReserve={() => console.log("Reserve:", issue.title)}
-                      onAlertMe={() => handleAlertMe(issue)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-24 border border-border">
+          {activeTab === "wishlist" && <>
+              {wishlistData.length > 0 ? <div className="space-y-4">
+                  {wishlistData.map(issue => <IssueCardCompact key={issue.id} issue={issue} showRemoveButton showCTA onRemove={() => removeFromWishlist(issue.id)} onAcquire={() => console.log("Acquire:", issue.title)} onReserve={() => console.log("Reserve:", issue.title)} onAlertMe={() => handleAlertMe(issue)} />)}
+                </div> : <div className="text-center py-24 border border-border">
                   <p className="text-body text-muted-foreground mb-6">
                     No Issues saved yet.
                   </p>
                   <Link to="/" className="link-archival">
                     Explore the Library
                   </Link>
-                </div>
-              )}
-            </>
-          )}
+                </div>}
+            </>}
         </div>
       </section>
 
@@ -258,22 +211,10 @@ const Shelf = () => {
       </section>
 
       {/* Share Wishlist Modal */}
-      <ShareWishlistModal
-        open={shareModalOpen}
-        onOpenChange={setShareModalOpen}
-      />
+      <ShareWishlistModal open={shareModalOpen} onOpenChange={setShareModalOpen} />
 
       {/* Alert Me Modal */}
-      {selectedIssue && (
-        <AlertMeModal
-          open={alertModalOpen}
-          onOpenChange={setAlertModalOpen}
-          productId={selectedIssue.id}
-          productTitle={selectedIssue.title}
-        />
-      )}
-    </main>
-  );
+      {selectedIssue && <AlertMeModal open={alertModalOpen} onOpenChange={setAlertModalOpen} productId={selectedIssue.id} productTitle={selectedIssue.title} />}
+    </main>;
 };
-
 export default Shelf;
