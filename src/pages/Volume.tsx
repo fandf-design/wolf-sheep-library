@@ -61,7 +61,13 @@ const Volume = () => {
       {/* Manifesto */}
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-3xl mx-auto">
-          <span className="text-meta block mb-6">Manifesto</span>
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-meta block">Manifesto</span>
+            <span className="text-meta text-muted-foreground/40">·</span>
+            <span className="text-meta uppercase tracking-widest text-muted-foreground/50">
+              Lean: {volume.lean}
+            </span>
+          </div>
           <p className="text-body text-lg text-foreground/90 leading-relaxed">
             {volume.manifesto}
           </p>
