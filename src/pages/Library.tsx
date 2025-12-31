@@ -134,7 +134,7 @@ const Library = () => {
           </div>
           
           <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="text-meta">© MMXXIV Fang & Fleece</span>
+            <span className="text-meta">© MMXXV Fang & Fleece</span>
             <span className="text-meta">All garments are artifacts. All artifacts are stories.</span>
           </div>
         </div>
