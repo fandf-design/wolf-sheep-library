@@ -5,6 +5,7 @@ export interface Volume {
   tension: string;
   slug: string;
   manifesto: string;
+  lean: "wolf" | "sheep";
   chapters: Chapter[];
 }
 
@@ -28,7 +29,7 @@ export interface Issue {
   craftsmanship: string;
   edition: string;
   material: string;
-  role: "Wolf" | "Sheep" | "Dual";
+  lean: "wolf" | "sheep";
   status: IssueStatus;
   price: number;
   images: string[];
@@ -42,6 +43,7 @@ export const volumes: Volume[] = [
     subtitle: "The first tension between power and surrender.",
     tension: "Alpha vs Omega",
     slug: "dominion",
+    lean: "wolf",
     manifesto: "In the beginning, there was only hunger and the awareness of being hunted. Dominion explores the primal contract between those who lead and those who follow—not as hierarchy, but as dance. Every garment in this volume carries the weight of authority or the grace of submission, often both in the same thread.",
     chapters: [
       {
@@ -70,6 +72,7 @@ export const volumes: Volume[] = [
     subtitle: "What we consume, and what consumes us.",
     tension: "Hungry Wolf vs Shear Elegance",
     slug: "appetite",
+    lean: "wolf",
     manifesto: "Appetite is the study of desire without apology. The hungry wolf does not ask permission to hunt. The sheared sheep transforms vulnerability into refined beauty. This volume lives in the tension between raw wanting and cultivated restraint.",
     chapters: [
       {
@@ -98,6 +101,7 @@ export const volumes: Volume[] = [
     subtitle: "The hours between dusk and dawn.",
     tension: "Lone Wolf vs Lost Sheep",
     slug: "nocturne",
+    lean: "sheep",
     manifesto: "Night belongs to those who wander—by choice or by fate. The lone wolf moves through darkness with purpose. The lost sheep seeks a path that may never appear. Nocturne is our meditation on solitude, on the garments we wear when no one else is watching.",
     chapters: [
       {
@@ -117,6 +121,7 @@ export const volumes: Volume[] = [
     subtitle: "The faces we wear to survive.",
     tension: "Cry Wolf vs Black Sheep",
     slug: "masquerade",
+    lean: "sheep",
     manifesto: "Society demands masks. The one who cries wolf learns that truth is rarely believed. The black sheep discovers that standing apart is both curse and gift. Masquerade explores the garments of performance—what we wear to hide, to reveal, to survive.",
     chapters: [
       {
@@ -136,6 +141,7 @@ export const volumes: Volume[] = [
     subtitle: "The bonds we choose and those chosen for us.",
     tension: "Pack vs Mob",
     slug: "allegiance",
+    lean: "wolf",
     manifesto: "The pack moves as one organism—each member essential, none expendable. The mob is chaos with a direction. Allegiance examines belonging: its comforts, its demands, its dangers. These are garments for gatherings, for movements, for standing together.",
     chapters: [
       {
@@ -155,6 +161,7 @@ export const volumes: Volume[] = [
     subtitle: "The end that makes way for beginning.",
     tension: "Fenrir vs Golden Fleece",
     slug: "ragnarok",
+    lean: "sheep",
     manifesto: "All things end. Fenrir breaks his chains. The Golden Fleece—that impossible treasure—proves both real and perishable. Ragnarök is our apocalypse collection: garments designed to outlast their wearers, to become relics, to witness the next world.",
     chapters: [
       {

@@ -10,7 +10,7 @@ import type { IssueStatus } from "@/types/issue-status";
 const issuesDatabase: Record<string, {
   id: string;
   title: string;
-  role: "Wolf" | "Sheep";
+  lean: "wolf" | "sheep";
   status: IssueStatus;
   material: string;
   volumeTitle: string;
@@ -19,7 +19,7 @@ const issuesDatabase: Record<string, {
   "alpha-coat-001": {
     id: "alpha-coat-001",
     title: "Alpha's Burden Overcoat",
-    role: "Wolf",
+    lean: "wolf",
     status: "limited",
     material: "Wool-Cashmere",
     volumeTitle: "Dominion",
@@ -28,7 +28,7 @@ const issuesDatabase: Record<string, {
   "omega-shroud-001": {
     id: "omega-shroud-001",
     title: "The Yielding Knit",
-    role: "Sheep",
+    lean: "sheep",
     status: "acquire",
     material: "Merino Wool",
     volumeTitle: "Dominion",
@@ -37,7 +37,7 @@ const issuesDatabase: Record<string, {
   "hunt-silk-001": {
     id: "hunt-silk-001",
     title: "Predator's Silk Shirt",
-    role: "Wolf",
+    lean: "wolf",
     status: "vaulted",
     material: "Mulberry Silk",
     volumeTitle: "Dominion",
@@ -46,7 +46,7 @@ const issuesDatabase: Record<string, {
   "shearing-wrap-001": {
     id: "shearing-wrap-001",
     title: "The Aftermath Wrap",
-    role: "Sheep",
+    lean: "sheep",
     status: "reserve",
     material: "Cashmere Blend",
     volumeTitle: "Dominion",
@@ -55,7 +55,7 @@ const issuesDatabase: Record<string, {
   "nocturne-cloak-001": {
     id: "nocturne-cloak-001",
     title: "Midnight Wanderer Cloak",
-    role: "Wolf",
+    lean: "wolf",
     status: "alert",
     material: "Wool-Silk",
     volumeTitle: "Dominion",
@@ -101,8 +101,6 @@ const Shelf = () => {
   // Get full issue data for wishlist items
   const wishlistData = wishlistItems.map(item => issuesDatabase[item.issueId]).filter(Boolean);
 
-  // Check for Dualist badge (Wolf & Sheep from same volume)
-  const hasDualistBadge = acquiredData.some(i => i.role === "Wolf") && acquiredData.some(i => i.role === "Sheep") && acquiredData.filter(i => i.role === "Wolf").some(wolf => acquiredData.filter(i => i.role === "Sheep").some(sheep => sheep.volumeTitle === wolf.volumeTitle));
   const handleAlertMe = (issue: {
     id: string;
     title: string;
@@ -122,28 +120,6 @@ const Shelf = () => {
           </p>
         </div>
       </section>
-
-      {/* Badges Section */}
-      {hasDualistBadge && <section className="py-12 px-6 md:px-12 border-b border-border bg-charcoal/10">
-          <div className="max-w-4xl mx-auto">
-            <span className="text-meta block mb-6">Distinctions</span>
-            
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-3 px-5 py-3 border border-accent/40 bg-accent/5">
-                <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-accent">
-                    <circle cx="6" cy="8" r="4" stroke="currentColor" strokeWidth="1" />
-                    <circle cx="10" cy="8" r="4" stroke="currentColor" strokeWidth="1" />
-                  </svg>
-                </div>
-                <div>
-                  <span className="text-ui text-accent block">Dualist</span>
-                  <span className="text-meta text-muted-foreground">Wolf & Sheep from Dominion</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>}
 
       {/* Tabs & Content */}
       <section className="py-16 px-6 md:px-12">
