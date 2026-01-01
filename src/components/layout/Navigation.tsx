@@ -36,14 +36,11 @@ export const Navigation = () => {
             </Link>)}
         </div>
 
-        {/* Account & Theme Toggle */}
+        {/* Shelf & Theme Toggle */}
         <div className="hidden md:flex items-center gap-6">
           <Link to="/shelf" className="link-archival opacity-70">
             Shelf
           </Link>
-          <button className="text-ui text-muted-foreground/60 hover:text-muted-foreground transition-colors">
-            Account
-          </button>
           <ThemeToggle />
         </div>
 
@@ -65,9 +62,6 @@ export const Navigation = () => {
               <Link to="/shelf" onClick={() => setIsMenuOpen(false)} className="text-ui text-muted-foreground">
                 Shelf
               </Link>
-              <button className="text-ui text-muted-foreground text-left">
-                Account
-              </button>
               <div className="pt-2">
                 <ThemeToggle />
               </div>
