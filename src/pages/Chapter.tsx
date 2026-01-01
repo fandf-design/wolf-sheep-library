@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { volumes, Issue } from "@/data/volumes";
 import { IssueStatusBadge, IssueCTAButton, AlertMeModal } from "@/components/issue";
 import { WishlistButton } from "@/components/shelf";
+import { useCart } from "@/hooks/use-cart";
 import type { IssueStatus } from "@/types/issue-status";
 
 // Sample issues with unified status system
@@ -78,6 +79,7 @@ const Chapter = () => {
   const { volumeSlug, chapterSlug } = useParams();
   const [alertModalOpen, setAlertModalOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const { addToCart, openCart } = useCart();
   
   const volume = volumes.find(v => v.slug === volumeSlug);
   const chapter = volume?.chapters.find(c => c.slug === chapterSlug);
@@ -89,8 +91,8 @@ const Chapter = () => {
   };
 
   const handleAcquire = (issue: Issue) => {
-    // TODO: Add to cart logic
-    console.log("Acquiring:", issue.title);
+    addToCart(issue.id, issue.title, issue.price);
+    openCart();
   };
 
   const handleReserve = (issue: Issue) => {
