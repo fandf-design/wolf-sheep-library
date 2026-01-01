@@ -60,8 +60,8 @@ const Library = () => {
               <h2 className="text-display-md">Volumes</h2>
             </div>
             <div className="hidden md:flex items-center gap-4 text-meta opacity-40">
-              <span className="tracking-[0.12em]">Scroll</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-muted-foreground animate-[drift_3s_ease-in-out_infinite]">
+              <span className="tracking-[0.12em] text-accent">Scroll</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="animate-[drift_3s_ease-in-out_infinite] text-[#c6a553]">
                 <path d="M5 12H19M19 12L14 7M19 12L14 17" stroke="currentColor" strokeWidth="0.75" />
               </svg>
             </div>
