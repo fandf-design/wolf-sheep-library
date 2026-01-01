@@ -52,7 +52,7 @@ const Library = () => {
       </section>
 
       {/* Volumes Section */}
-      <section className="relative py-20">
+      <section className="relative py-20 overflow-visible">
         <div className="px-6 md:px-12 mb-12">
           <div className="flex items-center justify-between">
             <div>
