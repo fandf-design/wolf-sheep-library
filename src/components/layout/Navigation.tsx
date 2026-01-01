@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ShoppingBag } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchOverlay } from "./SearchOverlay";
@@ -22,7 +22,12 @@ export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const { count: cartCount } = useCart();
+  const { count: cartCount, registerOpenCart } = useCart();
+
+  // Register cart opener so other components can open the cart
+  useEffect(() => {
+    registerOpenCart(() => setCartOpen(true));
+  }, [registerOpenCart]);
 
   return (
     <>

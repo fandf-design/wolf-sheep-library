@@ -1,25 +1,36 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Search, X } from "lucide-react";
+import { Search, X, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { volumes } from "@/data/volumes";
+import { isVolumeAccessible } from "@/lib/volume-access";
+import { useToast } from "@/hooks/use-toast";
 
 interface SearchResult {
   id: string;
   title: string;
-  type: "volume" | "chapter" | "issue";
+  type: "volume" | "chapter" | "issue" | "chronicle";
   path: string;
   subtitle?: string;
+  volumeSlug?: string;
 }
 
-// Mock search data (would come from API/CMS in production)
-const searchableItems: SearchResult[] = [
-  { id: "v1", title: "Dominion", type: "volume", path: "/volume/1", subtitle: "Volume I" },
-  { id: "c1", title: "The Alpha Principle", type: "chapter", path: "/volume/1/chapter/1", subtitle: "Chapter I" },
-  { id: "c2", title: "The Omega's Rest", type: "chapter", path: "/volume/1/chapter/2", subtitle: "Chapter II" },
-  { id: "c3", title: "The Hunt", type: "chapter", path: "/volume/1/chapter/3", subtitle: "Chapter III" },
-  { id: "i1", title: "Alpha's Burden Overcoat", type: "issue", path: "/volume/1/chapter/1/issue/alpha-coat-001", subtitle: "Issue" },
-  { id: "i2", title: "The Yielding Knit", type: "issue", path: "/volume/1/chapter/2/issue/omega-shroud-001", subtitle: "Issue" },
-  { id: "i3", title: "Predator's Silk Shirt", type: "issue", path: "/volume/1/chapter/3/issue/hunt-silk-001", subtitle: "Issue" },
+// Chronicle entries
+const chronicleEntries: SearchResult[] = [
+  { id: "chr-1", title: "The Myth of the First Thread", type: "chronicle", path: "/chronicle", subtitle: "Origin" },
+  { id: "chr-2", title: "Why We Use Cormorant", type: "chronicle", path: "/chronicle", subtitle: "Typography" },
+  { id: "chr-3", title: "Fenrir's Binding", type: "chronicle", path: "/chronicle", subtitle: "Mythology" },
+  { id: "chr-4", title: "On the Nature of Duality", type: "chronicle", path: "/chronicle", subtitle: "Philosophy" },
+  { id: "chr-5", title: "The Archive Principle", type: "chronicle", path: "/chronicle", subtitle: "Method" },
+];
+
+// Sample issues data (mirrors Chapter.tsx)
+const issuesData = [
+  { id: "alpha-coat-001", title: "Alpha's Burden Overcoat", chapterSlug: "alpha-principle", volumeSlug: "dominion" },
+  { id: "omega-shroud-001", title: "The Yielding Knit", chapterSlug: "omega-rest", volumeSlug: "dominion" },
+  { id: "hunt-silk-001", title: "Predator's Silk Shirt", chapterSlug: "the-hunt", volumeSlug: "appetite" },
+  { id: "shearing-wrap-001", title: "The Aftermath Wrap", chapterSlug: "after-shearing", volumeSlug: "appetite" },
+  { id: "nocturne-cloak-001", title: "Midnight Wanderer Cloak", chapterSlug: "solitary-passage", volumeSlug: "nocturne" },
 ];
 
 interface SearchOverlayProps {
@@ -31,6 +42,53 @@ export const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+
+  // Build searchable items from source data
+  const searchableItems = useMemo<SearchResult[]>(() => {
+    const items: SearchResult[] = [];
+
+    // Add volumes
+    volumes.forEach((volume) => {
+      items.push({
+        id: `vol-${volume.slug}`,
+        title: volume.title,
+        type: "volume",
+        path: `/volume/${volume.slug}`,
+        subtitle: `Volume ${volume.number}`,
+        volumeSlug: volume.slug,
+      });
+
+      // Add chapters
+      volume.chapters.forEach((chapter) => {
+        items.push({
+          id: `ch-${volume.slug}-${chapter.slug}`,
+          title: chapter.title,
+          type: "chapter",
+          path: `/volume/${volume.slug}/chapter/${chapter.slug}`,
+          subtitle: `${volume.title} · Chapter`,
+          volumeSlug: volume.slug,
+        });
+      });
+    });
+
+    // Add issues
+    issuesData.forEach((issue) => {
+      items.push({
+        id: `issue-${issue.id}`,
+        title: issue.title,
+        type: "issue",
+        path: `/volume/${issue.volumeSlug}/chapter/${issue.chapterSlug}`,
+        subtitle: "Issue",
+        volumeSlug: issue.volumeSlug,
+      });
+    });
+
+    // Add chronicle entries
+    items.push(...chronicleEntries);
+
+    return items;
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -57,7 +115,7 @@ export const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
         item.subtitle?.toLowerCase().includes(query.toLowerCase())
     );
     setResults(filtered);
-  }, [query]);
+  }, [query, searchableItems]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -68,6 +126,19 @@ export const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
     }
     return () => window.removeEventListener("keydown", handleEsc);
   }, [open, onClose]);
+
+  const handleResultClick = (result: SearchResult, e: React.MouseEvent) => {
+    // Check locked-volume gating
+    if (result.volumeSlug && !isVolumeAccessible(result.volumeSlug)) {
+      e.preventDefault();
+      toast({
+        title: "Volume Locked",
+        description: "This content is not yet accessible.",
+      });
+      return;
+    }
+    onClose();
+  };
 
   if (!open) return null;
 
@@ -97,19 +168,31 @@ export const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
           <div className="mt-8">
             {results.length > 0 ? (
               <div className="space-y-2">
-                {results.map((result) => (
-                  <Link
-                    key={result.id}
-                    to={result.path}
-                    onClick={onClose}
-                    className="block p-4 bg-muted/20 border border-border/30 hover:bg-muted/40 transition-colors"
-                  >
-                    <span className="text-meta text-muted-foreground block mb-1">
-                      {result.subtitle}
-                    </span>
-                    <span className="text-body text-foreground">{result.title}</span>
-                  </Link>
-                ))}
+                {results.map((result) => {
+                  const isLocked = result.volumeSlug && !isVolumeAccessible(result.volumeSlug);
+                  return (
+                    <Link
+                      key={result.id}
+                      to={result.path}
+                      onClick={(e) => handleResultClick(result, e)}
+                      className={`block p-4 bg-muted/20 border border-border/30 hover:bg-muted/40 transition-colors ${
+                        isLocked ? "opacity-50" : ""
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-meta text-muted-foreground block mb-1">
+                            {result.subtitle}
+                          </span>
+                          <span className="text-body text-foreground">{result.title}</span>
+                        </div>
+                        {isLocked && (
+                          <Lock className="w-4 h-4 text-muted-foreground" />
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             ) : (
               <p className="text-body text-muted-foreground text-center py-12">
