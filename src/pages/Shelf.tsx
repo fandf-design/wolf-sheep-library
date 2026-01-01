@@ -21,7 +21,6 @@ interface Address {
 const issuesDatabase: Record<string, {
   id: string;
   title: string;
-  lean: "wolf" | "sheep";
   status: IssueStatus;
   material: string;
   volumeTitle: string;
@@ -30,7 +29,6 @@ const issuesDatabase: Record<string, {
   "alpha-coat-001": {
     id: "alpha-coat-001",
     title: "Alpha's Burden Overcoat",
-    lean: "wolf",
     status: "limited",
     material: "Wool-Cashmere",
     volumeTitle: "Dominion",
@@ -39,7 +37,6 @@ const issuesDatabase: Record<string, {
   "omega-shroud-001": {
     id: "omega-shroud-001",
     title: "The Yielding Knit",
-    lean: "sheep",
     status: "acquire",
     material: "Merino Wool",
     volumeTitle: "Dominion",
@@ -48,7 +45,6 @@ const issuesDatabase: Record<string, {
   "hunt-silk-001": {
     id: "hunt-silk-001",
     title: "Predator's Silk Shirt",
-    lean: "wolf",
     status: "vaulted",
     material: "Mulberry Silk",
     volumeTitle: "Dominion",
@@ -57,7 +53,6 @@ const issuesDatabase: Record<string, {
   "shearing-wrap-001": {
     id: "shearing-wrap-001",
     title: "The Aftermath Wrap",
-    lean: "sheep",
     status: "reserve",
     material: "Cashmere Blend",
     volumeTitle: "Dominion",
@@ -66,7 +61,6 @@ const issuesDatabase: Record<string, {
   "nocturne-cloak-001": {
     id: "nocturne-cloak-001",
     title: "Midnight Wanderer Cloak",
-    lean: "wolf",
     status: "alert",
     material: "Wool-Silk",
     volumeTitle: "Dominion",

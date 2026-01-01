@@ -7,7 +7,6 @@ interface IssueCardCompactProps {
   issue: {
     id: string;
     title: string;
-    lean: "wolf" | "sheep";
     status: IssueStatus;
     material?: string;
     volumeTitle?: string;
@@ -39,9 +38,6 @@ export const IssueCardCompact = ({
         {/* Left: Issue Info */}
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-meta uppercase tracking-widest text-muted-foreground/50">
-              {issue.lean}
-            </span>
             <IssueStatusBadge status={issue.status} />
           </div>
           

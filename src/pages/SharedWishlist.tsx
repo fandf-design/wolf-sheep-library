@@ -7,7 +7,6 @@ import type { IssueStatus } from "@/types/issue-status";
 const issuesDatabase: Record<string, {
   id: string;
   title: string;
-  role: "Wolf" | "Sheep";
   status: IssueStatus;
   volumeTitle: string;
   chapterTitle: string;
@@ -15,7 +14,6 @@ const issuesDatabase: Record<string, {
   "alpha-coat-001": {
     id: "alpha-coat-001",
     title: "Alpha's Burden Overcoat",
-    role: "Wolf",
     status: "limited",
     volumeTitle: "Dominion",
     chapterTitle: "The Alpha Principle"
@@ -23,7 +21,6 @@ const issuesDatabase: Record<string, {
   "omega-shroud-001": {
     id: "omega-shroud-001",
     title: "The Yielding Knit",
-    role: "Sheep",
     status: "acquire",
     volumeTitle: "Dominion",
     chapterTitle: "The Omega's Rest"
@@ -31,7 +28,6 @@ const issuesDatabase: Record<string, {
   "hunt-silk-001": {
     id: "hunt-silk-001",
     title: "Predator's Silk Shirt",
-    role: "Wolf",
     status: "vaulted",
     volumeTitle: "Dominion",
     chapterTitle: "The Hunt"
@@ -39,7 +35,6 @@ const issuesDatabase: Record<string, {
   "shearing-wrap-001": {
     id: "shearing-wrap-001",
     title: "The Aftermath Wrap",
-    role: "Sheep",
     status: "reserve",
     volumeTitle: "Dominion",
     chapterTitle: "After the Shearing"
@@ -47,7 +42,6 @@ const issuesDatabase: Record<string, {
   "nocturne-cloak-001": {
     id: "nocturne-cloak-001",
     title: "Midnight Wanderer Cloak",
-    role: "Wolf",
     status: "alert",
     volumeTitle: "Dominion",
     chapterTitle: "Solitary Passage"
@@ -104,13 +98,6 @@ const SharedWishlist = () => {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <span className={`text-meta px-2 py-0.5 ${
-                          issue.role === "Wolf" 
-                            ? "bg-charcoal text-foreground" 
-                            : "bg-bone/10 text-bone"
-                        }`}>
-                          {issue.role}
-                        </span>
                         <IssueStatusBadge status={issue.status} />
                       </div>
                       

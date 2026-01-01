@@ -15,7 +15,6 @@ const sampleIssues: Issue[] = [
     craftsmanship: "Hand-finished buttonholes. Horn buttons sourced from ethical farms. Each coat requires 40 hours of construction.",
     edition: "037/100",
     material: "Wool-Cashmere Blend",
-    lean: "wolf",
     status: "limited",
     price: 2400,
     images: [],
@@ -29,7 +28,6 @@ const sampleIssues: Issue[] = [
     craftsmanship: "Seamless construction. Three weeks of hand-knitting per piece. Each carries a unique tension pattern.",
     edition: "Open Edition",
     material: "Fine Merino Wool",
-    lean: "sheep",
     status: "acquire",
     price: 890,
     images: [],
@@ -43,7 +41,6 @@ const sampleIssues: Issue[] = [
     craftsmanship: "Mother-of-pearl buttons. French seams throughout. Collar designed to frame without constricting.",
     edition: "Limited — 24hr Drop",
     material: "Mulberry Silk",
-    lean: "wolf",
     status: "vaulted",
     price: 680,
     images: [],
@@ -57,7 +54,6 @@ const sampleIssues: Issue[] = [
     craftsmanship: "Single-piece construction. No seams, no closures, only drape.",
     edition: "Pre-Order",
     material: "Cashmere Blend",
-    lean: "sheep",
     status: "reserve",
     price: 1200,
     images: [],
@@ -71,7 +67,6 @@ const sampleIssues: Issue[] = [
     craftsmanship: "Hand-stitched hem. Weighted corners for dramatic drape.",
     edition: "Temporarily Unavailable",
     material: "Wool-Silk",
-    lean: "wolf",
     status: "alert",
     price: 1800,
     images: [],
@@ -196,12 +191,7 @@ const Chapter = () => {
                     {/* Content */}
                     <div className="flex flex-col justify-center">
                       <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-meta uppercase tracking-widest text-muted-foreground/50">
-                            {issue.lean}
-                          </span>
-                          <IssueStatusBadge status={issue.status} />
-                        </div>
+                        <IssueStatusBadge status={issue.status} />
                         <WishlistButton 
                           issueId={issue.id} 
                           issueTitle={issue.title}
