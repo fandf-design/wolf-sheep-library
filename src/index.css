@@ -80,40 +80,62 @@
   }
 
   .light {
-    /* Parchment background stays bright */
-    --background: 40 28% 96%;
-    --surface: 40 24% 94%;
+    /* Paper + ink */
+    --background: 40 28% 96%;          /* parchment */
+    --foreground: 240 9% 12%;          /* deep ink */
     
-    /* Main ink — deeper, cooler, readable */
-    --foreground: 240 8% 14%;
+    /* Surfaces */
+    --card: 40 22% 93%;
+    --card-foreground: 240 9% 12%;
+    --popover: 40 26% 95%;
+    --popover-foreground: 240 9% 12%;
     
-    /* Cards and containers */
-    --card: 40 22% 92%;
-    --card-foreground: 240 8% 14%;
-    
-    --popover: 40 24% 94%;
-    --popover-foreground: 240 8% 14%;
-    
-    /* Primary text (titles, nav, headlines) */
-    --primary: 240 8% 14%;
+    /* Primary UI */
+    --primary: 240 9% 12%;
     --primary-foreground: 40 28% 96%;
     
-    /* Secondary UI surfaces */
-    --secondary: 40 18% 88%;
-    --secondary-foreground: 240 7% 22%;
+    /* Secondary UI */
+    --secondary: 40 18% 89%;
+    --secondary-foreground: 240 8% 20%;
     
-    /* Muted text — must still be readable */
-    --muted: 40 14% 90%;
-    --muted-foreground: 240 6% 34%;
+    /* Muted (must remain readable) */
+    --muted: 40 14% 91%;
+    --muted-foreground: 240 7% 34%;
     
-    /* Accent gold — deeper, less chalky */
-    --accent: 43 38% 36%;
+    /* Accent (quiet bullion, not web-yellow) */
+    --accent: 43 36% 34%;
     --accent-foreground: 40 28% 96%;
     
-    /* Structural lines */
-    --border: 240 5% 80%;
-    --input: 240 5% 82%;
-    --ring: 43 38% 36%;
+    /* Structural lines + inputs */
+    --border: 240 6% 80%;
+    --input: 240 6% 82%;
+    --ring: 43 36% 34%;
+    
+    /* Optional: link colors */
+    --link: 240 9% 12%;
+    --link-hover: 43 36% 34%;
+  }
+
+  /* Light theme status pills — archival, never black */
+  .light .status-pill,
+  .light .badge,
+  .light .chip {
+    background: hsl(40 18% 90%);
+    color: hsl(240 7% 30%);
+    border: 1px solid hsl(240 6% 82%);
+  }
+
+  .light .status-pill--published,
+  .light .badge--published {
+    background: transparent;
+    color: hsl(240 7% 34%);
+    border: 1px solid hsl(240 6% 84%);
+  }
+
+  /* Light theme dividers: visible but not loud */
+  .light hr,
+  .light .divider {
+    border-color: hsl(240 6% 82%);
   }
 }
 
