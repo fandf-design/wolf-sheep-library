@@ -1,47 +1,5 @@
 import { Link } from "react-router-dom";
-
-const chronicles = [
-  {
-    title: "The Myth of the First Thread",
-    category: "Origin",
-    excerpt: "Before there was fabric, there was intention. The first thread was not spun—it was spoken into existence by the tension between predator and prey.",
-    date: "Autumn 2024",
-    readTime: "12 min",
-    slug: "first-thread"
-  },
-  {
-    title: "Why We Use Cormorant",
-    category: "Typography",
-    excerpt: "A meditation on the letterforms that speak our name. Cormorant Garamond carries centuries of restraint in its serifs—the weight of words meant to last.",
-    date: "Summer 2024",
-    readTime: "8 min",
-    slug: "why-cormorant"
-  },
-  {
-    title: "Fenrir's Binding",
-    category: "Mythology",
-    excerpt: "The wolf-god's chains were forged from impossible things: the sound of a cat's footfall, a woman's beard, the roots of a mountain. Our garments aspire to this impossibility.",
-    date: "Spring 2024",
-    readTime: "15 min",
-    slug: "fenrirs-binding"
-  },
-  {
-    title: "On the Nature of Duality",
-    category: "Philosophy",
-    excerpt: "Wolf and sheep are not opposites. They are the same creature viewed from different distances. Step closer, and the wool reveals teeth. Step back, and the fangs become fleece.",
-    date: "Winter 2023",
-    readTime: "10 min",
-    slug: "nature-of-duality"
-  },
-  {
-    title: "The Archive Principle",
-    category: "Method",
-    excerpt: "Fashion dies the moment it becomes only about the present. We build for the future reader, the collector who will find these garments when we are gone.",
-    date: "Autumn 2023",
-    readTime: "7 min",
-    slug: "archive-principle"
-  }
-];
+import { chronicles } from "@/data/chronicles";
 
 const Chronicle = () => {
   return (
