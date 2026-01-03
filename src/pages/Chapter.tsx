@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { toast } from "sonner";
 import { volumes, Issue } from "@/data/volumes";
 import { IssueStatusBadge, IssueCTAButton, AlertMeModal } from "@/components/issue";
 import { WishlistButton } from "@/components/shelf";
-import { useCart } from "@/hooks/use-cart";
-import type { IssueStatus } from "@/types/issue-status";
+import { useCartStore } from "@/stores/cartStore";
+import { useShopifyProducts } from "@/hooks/use-shopify-products";
+import { mapShopifyToStatus } from "@/types/issue-status";
+import type { ShopifyProduct, ShopifyCartItem } from "@/types/shopify";
 
-// Sample issues with unified status system
+// Sample issues with unified status system (fallback when no Shopify products)
 const sampleIssues: Issue[] = [
   {
     id: "alpha-coat-001",
@@ -79,10 +82,17 @@ const Chapter = () => {
   const { volumeSlug, chapterSlug } = useParams();
   const [alertModalOpen, setAlertModalOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
-  const { addToCart, openCart } = useCart();
+  const [cartSheetOpen, setCartSheetOpen] = useState(false);
+  
+  const addItem = useCartStore((state) => state.addItem);
+  
+  // Fetch Shopify products
+  const { data: shopifyProducts, isLoading: productsLoading } = useShopifyProducts(50);
   
   const volume = volumes.find(v => v.slug === volumeSlug);
   const chapter = volume?.chapters.find(c => c.slug === chapterSlug);
+  
+  // Use sample issues as fallback when no Shopify products
   const issues = sampleIssues.filter(i => i.chapterSlug === chapterSlug);
 
   const handleAlertMe = (issue: Issue) => {
@@ -90,14 +100,40 @@ const Chapter = () => {
     setAlertModalOpen(true);
   };
 
-  const handleAcquire = (issue: Issue) => {
-    addToCart(issue.id, issue.title, issue.price);
-    openCart();
+  const handleAcquireShopify = useCallback((product: ShopifyProduct) => {
+    const variant = product.node.variants.edges[0]?.node;
+    if (!variant) {
+      toast.error("Product unavailable");
+      return;
+    }
+
+    const cartItem: ShopifyCartItem = {
+      product,
+      variantId: variant.id,
+      variantTitle: variant.title,
+      price: variant.price,
+      quantity: 1,
+      selectedOptions: variant.selectedOptions,
+    };
+
+    addItem(cartItem);
+    toast.success("Added to cart", {
+      description: product.node.title,
+      position: "top-center",
+    });
+  }, [addItem]);
+
+  const handleAcquireFallback = (issue: Issue) => {
+    // For sample issues without Shopify, show message
+    toast.info("Connect Shopify products to enable checkout", {
+      position: "top-center",
+    });
   };
 
   const handleReserve = (issue: Issue) => {
-    // TODO: Reservation/preorder flow
-    console.log("Reserving:", issue.title);
+    toast.info("Reservation flow coming soon", {
+      position: "top-center",
+    });
   };
 
   if (!volume || !chapter) {
@@ -112,6 +148,30 @@ const Chapter = () => {
   }
 
   const chapterIndex = volume.chapters.findIndex(c => c.slug === chapterSlug);
+
+  // Convert Shopify products to display format
+  const shopifyIssues = shopifyProducts?.map((product) => {
+    const variant = product.node.variants.edges[0]?.node;
+    const status = mapShopifyToStatus(
+      variant?.availableForSale ?? false,
+      !!product.node.publishedAt,
+      product.node.tags
+    );
+
+    return {
+      product,
+      id: product.node.id,
+      title: product.node.title,
+      description: product.node.description,
+      price: variant?.price.amount ? parseFloat(variant.price.amount) : 0,
+      currencyCode: variant?.price.currencyCode || "USD",
+      status,
+      image: product.node.images.edges[0]?.node,
+      handle: product.node.handle,
+    };
+  }) || [];
+
+  const hasShopifyProducts = shopifyIssues.length > 0;
 
   return (
     <main className="min-h-screen pt-16">
@@ -172,8 +232,95 @@ const Chapter = () => {
         </div>
       </section>
 
-      {/* Issues */}
-      {issues.length > 0 && (
+      {/* Shopify Products */}
+      {hasShopifyProducts && (
+        <section className="py-24 px-6 md:px-12 border-t border-border">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-16">
+              <span className="text-meta block mb-2">From the Archive</span>
+              <h2 className="text-display-md">Available Issues</h2>
+            </div>
+
+            <div className="space-y-16">
+              {shopifyIssues.map((item) => (
+                <article key={item.id} className="group">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {/* Product Image */}
+                    <Link 
+                      to={`/product/${item.handle}`}
+                      className="aspect-[3/4] bg-charcoal/50 border border-border overflow-hidden block"
+                    >
+                      {item.image ? (
+                        <img
+                          src={item.image.url}
+                          alt={item.image.altText || item.title}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-meta text-muted-foreground">No Image</span>
+                        </div>
+                      )}
+                    </Link>
+                    
+                    {/* Content */}
+                    <div className="flex flex-col justify-center">
+                      <div className="flex items-center justify-between mb-4">
+                        <IssueStatusBadge status={item.status} />
+                        <WishlistButton 
+                          issueId={item.id} 
+                          issueTitle={item.title}
+                          variant="compact"
+                        />
+                      </div>
+                      <Link to={`/product/${item.handle}`}>
+                        <h3 className="text-display-md text-foreground mb-4 hover:text-accent transition-colors">
+                          {item.title}
+                        </h3>
+                      </Link>
+                      
+                      <p className="text-body text-muted-foreground leading-relaxed mb-6 line-clamp-3">
+                        {item.description}
+                      </p>
+                      
+                      {/* Price & Action */}
+                      {item.status !== "vaulted" ? (
+                        <div className="flex items-center justify-between">
+                          <span className="text-display text-xl text-foreground">
+                            {new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: item.currencyCode,
+                              minimumFractionDigits: 0,
+                            }).format(item.price)}
+                          </span>
+                          <IssueCTAButton
+                            status={item.status}
+                            onAcquire={() => handleAcquireShopify(item.product)}
+                            onReserve={() => handleReserve(sampleIssues[0])}
+                            onAlertMe={() => handleAlertMe(sampleIssues[0])}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-between">
+                          <span className="text-body text-muted-foreground italic">
+                            This issue has entered the Vault
+                          </span>
+                          <Link to="/vault" className="text-ui text-accent/80 hover:text-accent transition-colors">
+                            View in Vault →
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Fallback Sample Issues */}
+      {!hasShopifyProducts && issues.length > 0 && (
         <section className="py-24 px-6 md:px-12 border-t border-border">
           <div className="max-w-5xl mx-auto">
             <div className="mb-16">
@@ -228,7 +375,7 @@ const Chapter = () => {
                           </span>
                           <IssueCTAButton
                             status={issue.status}
-                            onAcquire={() => handleAcquire(issue)}
+                            onAcquire={() => handleAcquireFallback(issue)}
                             onReserve={() => handleReserve(issue)}
                             onAlertMe={() => handleAlertMe(issue)}
                           />
