@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Search, ShoppingBag } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchOverlay } from "./SearchOverlay";
 import { CartSheet } from "./CartSheet";
-import { useCart } from "@/hooks/use-cart";
+import { useCartStore } from "@/stores/cartStore";
 
 const navItems = [{
   label: "Library",
@@ -22,12 +22,8 @@ export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const { count: cartCount, registerOpenCart } = useCart();
-
-  // Register cart opener so other components can open the cart
-  useEffect(() => {
-    registerOpenCart(() => setCartOpen(true));
-  }, [registerOpenCart]);
+  
+  const cartCount = useCartStore((state) => state.items.length);
 
   return (
     <>
