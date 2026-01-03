@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, useRef, ReactNode, useMemo } from "react";
 
 interface CartItem {
   issueId: string;
   title: string;
   price: number;
+  quantity: number;
   addedAt: Date;
 }
 
@@ -11,9 +12,11 @@ interface CartContextType {
   items: CartItem[];
   addToCart: (issueId: string, title: string, price: number) => void;
   removeFromCart: (issueId: string) => void;
+  updateQuantity: (issueId: string, quantity: number) => void;
   clearCart: () => void;
   isInCart: (issueId: string) => boolean;
   count: number;
+  subtotal: number;
   openCart: () => void;
   registerOpenCart: (fn: () => void) => void;
 }
@@ -21,6 +24,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const STORAGE_KEY = "ff-cart";
+const MAX_QUANTITY = 10;
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
@@ -30,6 +34,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const parsed = JSON.parse(stored);
         return parsed.map((item: any) => ({
           ...item,
+          quantity: item.quantity ?? 1, // Migration: default to 1 if missing
           addedAt: new Date(item.addedAt)
         }));
       }
@@ -48,15 +53,36 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = useCallback((issueId: string, title: string, price: number) => {
     setItems((prev) => {
-      if (prev.some((item) => item.issueId === issueId)) {
-        return prev;
+      const existing = prev.find((item) => item.issueId === issueId);
+      if (existing) {
+        // Increment quantity if under max
+        if (existing.quantity >= MAX_QUANTITY) return prev;
+        return prev.map((item) =>
+          item.issueId === issueId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       }
-      return [...prev, { issueId, title, price, addedAt: new Date() }];
+      return [...prev, { issueId, title, price, quantity: 1, addedAt: new Date() }];
     });
   }, []);
 
   const removeFromCart = useCallback((issueId: string) => {
     setItems((prev) => prev.filter((item) => item.issueId !== issueId));
+  }, []);
+
+  const updateQuantity = useCallback((issueId: string, quantity: number) => {
+    if (quantity <= 0) {
+      setItems((prev) => prev.filter((item) => item.issueId !== issueId));
+    } else {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.issueId === issueId
+            ? { ...item, quantity: Math.min(quantity, MAX_QUANTITY) }
+            : item
+        )
+      );
+    }
   }, []);
 
   const clearCart = useCallback(() => {
@@ -65,6 +91,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const isInCart = useCallback(
     (issueId: string) => items.some((item) => item.issueId === issueId),
+    [items]
+  );
+
+  const subtotal = useMemo(
+    () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [items]
   );
 
@@ -82,9 +113,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         items,
         addToCart,
         removeFromCart,
+        updateQuantity,
         clearCart,
         isInCart,
         count: items.length,
+        subtotal,
         openCart,
         registerOpenCart,
       }}
