@@ -12,6 +12,7 @@ import Library from "./pages/Library";
 import Volume from "./pages/Volume";
 import Chapter from "./pages/Chapter";
 import Chronicle from "./pages/Chronicle";
+import ChronicleEntry from "./pages/ChronicleEntry";
 import Vault from "./pages/Vault";
 import Shelf from "./pages/Shelf";
 import SharedWishlist from "./pages/SharedWishlist";
@@ -48,6 +49,7 @@ const App = () => (
                   } 
                 />
                 <Route path="/chronicle" element={<Chronicle />} />
+                <Route path="/chronicle/:slug" element={<ChronicleEntry />} />
                 <Route path="/vault" element={<Vault />} />
                 <Route path="/shelf" element={<Shelf />} />
                 <Route path="/shelf/wishlist/:token" element={<SharedWishlist />} />

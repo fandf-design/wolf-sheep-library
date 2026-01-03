@@ -15,14 +15,16 @@ interface SearchResult {
   volumeSlug?: string;
 }
 
-// Chronicle entries
-const chronicleEntries: SearchResult[] = [
-  { id: "chr-1", title: "The Myth of the First Thread", type: "chronicle", path: "/chronicle", subtitle: "Origin" },
-  { id: "chr-2", title: "Why We Use Cormorant", type: "chronicle", path: "/chronicle", subtitle: "Typography" },
-  { id: "chr-3", title: "Fenrir's Binding", type: "chronicle", path: "/chronicle", subtitle: "Mythology" },
-  { id: "chr-4", title: "On the Nature of Duality", type: "chronicle", path: "/chronicle", subtitle: "Philosophy" },
-  { id: "chr-5", title: "The Archive Principle", type: "chronicle", path: "/chronicle", subtitle: "Method" },
-];
+import { chronicles } from "@/data/chronicles";
+
+// Generate chronicle entries from shared data
+const chronicleEntries: SearchResult[] = chronicles.map(c => ({
+  id: `chr-${c.slug}`,
+  title: c.title,
+  type: "chronicle" as const,
+  path: `/chronicle/${c.slug}`,
+  subtitle: c.category,
+}));
 
 // Sample issues data (mirrors Chapter.tsx)
 const issuesData = [
