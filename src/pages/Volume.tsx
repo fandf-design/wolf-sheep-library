@@ -11,14 +11,14 @@ const Volume = () => {
   const volume = volumes.find(v => v.slug === slug);
   const isAccessible = slug ? isVolumeAccessible(slug) : false;
 
-  // Fetch all products for this volume
-  const { data: shopifyProducts, isLoading } = useShopifyProducts(100, `tag:volume:${slug}`);
+  // Fetch all products (no query filter - Storefront API has limited query support)
+  const { data: shopifyProducts, isLoading } = useShopifyProducts(100);
 
-  // Get products for a specific chapter
+  // Get products for a specific chapter by filtering tags client-side
   const getProductsForChapter = (chapterSlug: string) => {
     if (!shopifyProducts) return [];
     return shopifyProducts.filter(product =>
-      product.node.tags.includes(`chapter:${chapterSlug}`)
+      product.node.tags.some(tag => tag === `chapter:${chapterSlug}`)
     );
   };
 
@@ -181,12 +181,15 @@ const Volume = () => {
                         })}
                       </div>
                     ) : (
-                      <Link
-                        to={`/volume/${volume.slug}/chapter/${chapter.slug}`}
-                        className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        <span>View Chapter →</span>
-                      </Link>
+                      <div className="py-4">
+                        <p className="text-meta text-muted-foreground/60 mb-2">No issues available</p>
+                        <Link
+                          to={`/volume/${volume.slug}/chapter/${chapter.slug}`}
+                          className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-accent transition-colors"
+                        >
+                          <span>View Chapter →</span>
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </section>
