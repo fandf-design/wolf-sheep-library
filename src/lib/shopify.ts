@@ -3,9 +3,8 @@ import { toast } from "sonner";
 // Shopify Storefront API Configuration
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "lovable-project-29xu6.myshopify.com";
 export const SHOPIFY_STOREFRONT_TOKEN = "9a0f5a01c2fbdb7e0a90e2524b29abe9";
-export const SHOPIFY_API_VERSION = "2025-07";
-// Some Shopify stores return 404 for versioned Storefront endpoints; the versionless proxy is supported.
-export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/graphql`;
+export const SHOPIFY_API_VERSION = "2025-01";
+export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 // GraphQL Queries
 export const PRODUCTS_QUERY = `
