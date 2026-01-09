@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Minus, Plus } from "lucide-react";
 import { useShopifyProduct } from "@/hooks/use-shopify-products";
 import { useCartStore } from "@/stores/cartStore";
 import { IssueStatusBadge, IssueCTAButton } from "@/components/issue";
 import { WishlistButton } from "@/components/shelf";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { mapShopifyToStatus } from "@/types/issue-status";
-import type { ShopifyCartItem, ShopifyVariant } from "@/types/shopify";
+import type { ShopifyCartItem } from "@/types/shopify";
 
 const Product = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -16,6 +22,9 @@ const Product = () => {
   const addItem = useCartStore((state) => state.addItem);
   
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (isLoading) {
     return (
@@ -39,7 +48,7 @@ const Product = () => {
   const variants = product.variants.edges.map((e) => e.node);
   const selectedVariant = variants.find((v) => v.id === selectedVariantId) || variants[0];
   const images = product.images.edges.map((e) => e.node);
-  const primaryImage = images[0];
+  const activeImage = images[activeImageIndex] || images[0];
 
   const status = mapShopifyToStatus(
     selectedVariant?.availableForSale ?? false,
@@ -47,7 +56,20 @@ const Product = () => {
     product.tags
   );
 
+  // Check if product has size options
+  const sizeOption = product.options.find(
+    (opt) => opt.name.toLowerCase() === "size"
+  );
+  const hasSizeOptions = sizeOption && sizeOption.values.length > 0;
+  const hasMultipleVariants = variants.length > 1 && variants[0]?.title !== "Default Title";
+
   const handleAddToCart = () => {
+    // Enforce size selection if size options exist
+    if (hasSizeOptions && !selectedSize) {
+      toast.error("Select a size");
+      return;
+    }
+
     if (!selectedVariant) {
       toast.error("Please select a variant");
       return;
@@ -58,25 +80,36 @@ const Product = () => {
       variantId: selectedVariant.id,
       variantTitle: selectedVariant.title,
       price: selectedVariant.price,
-      quantity: 1,
+      quantity,
       selectedOptions: selectedVariant.selectedOptions,
     };
 
     addItem(cartItem);
     toast.success("Added to cart", {
-      description: product.title,
+      description: `${product.title}${quantity > 1 ? ` × ${quantity}` : ""}`,
       position: "top-center",
     });
   };
 
-  const hasMultipleVariants = variants.length > 1 && variants[0]?.title !== "Default Title";
+  const handleSizeSelect = (size: string) => {
+    setSelectedSize(size);
+    // Find matching variant for this size
+    const matchingVariant = variants.find((v) =>
+      v.selectedOptions.some(
+        (o) => o.name.toLowerCase() === "size" && o.value === size
+      )
+    );
+    if (matchingVariant) {
+      setSelectedVariantId(matchingVariant.id);
+    }
+  };
 
   return (
     <main className="min-h-screen pt-16">
-      <section className="py-16 px-6 md:px-12">
+      <section className="py-12 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumb */}
-          <div className="mb-12">
+          <div className="mb-8">
             <Link to="/" className="text-meta text-muted-foreground hover:text-accent transition-colors">
               Library
             </Link>
@@ -84,14 +117,15 @@ const Product = () => {
             <span className="text-meta text-accent/60">{product.title}</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Image Gallery */}
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column - Image Gallery */}
+            <div className="space-y-3">
+              {/* Main Image */}
               <div className="aspect-[3/4] bg-charcoal/50 border border-border overflow-hidden">
-                {primaryImage ? (
+                {activeImage ? (
                   <img
-                    src={primaryImage.url}
-                    alt={primaryImage.altText || product.title}
+                    src={activeImage.url}
+                    alt={activeImage.altText || product.title}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -104,25 +138,45 @@ const Product = () => {
               {/* Thumbnail strip */}
               {images.length > 1 && (
                 <div className="flex gap-2 overflow-x-auto pb-2">
-                  {images.slice(1, 5).map((img, idx) => (
-                    <div 
-                      key={idx} 
-                      className="w-20 h-24 flex-shrink-0 bg-charcoal/30 border border-border/50 overflow-hidden"
+                  {images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`w-16 h-20 flex-shrink-0 border overflow-hidden transition-colors ${
+                        idx === activeImageIndex
+                          ? "border-accent"
+                          : "border-border/50 hover:border-border"
+                      }`}
                     >
                       <img
                         src={img.url}
-                        alt={img.altText || `${product.title} ${idx + 2}`}
+                        alt={img.altText || `${product.title} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Product Details */}
+            {/* Right Column - Product Details */}
             <div className="flex flex-col">
-              <div className="flex items-center justify-between mb-4">
+              {/* Title */}
+              <h1 className="text-display-lg text-foreground mb-4">
+                {product.title}
+              </h1>
+
+              {/* Price */}
+              <span className="text-display text-2xl text-foreground mb-6">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: selectedVariant?.price.currencyCode || "USD",
+                  minimumFractionDigits: 0,
+                }).format(parseFloat(selectedVariant?.price.amount || "0"))}
+              </span>
+
+              {/* Edition & Status */}
+              <div className="flex items-center gap-4 mb-6">
                 <IssueStatusBadge status={status} />
                 <WishlistButton 
                   issueId={product.id} 
@@ -131,17 +185,46 @@ const Product = () => {
                 />
               </div>
 
-              <h1 className="text-display-lg text-foreground mb-6">
-                {product.title}
-              </h1>
+              {/* Size Selection (mandatory before acquisition) */}
+              {hasSizeOptions && (
+                <div className="mb-6">
+                  <span className="text-meta text-muted-foreground block mb-3">
+                    Size
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {sizeOption.values.map((size) => {
+                      const matchingVariant = variants.find((v) =>
+                        v.selectedOptions.some(
+                          (o) => o.name.toLowerCase() === "size" && o.value === size
+                        )
+                      );
+                      const isAvailable = matchingVariant?.availableForSale;
+                      const isSelected = selectedSize === size;
 
-              <p className="text-body text-muted-foreground leading-relaxed mb-8">
-                {product.description}
-              </p>
+                      return (
+                        <button
+                          key={size}
+                          onClick={() => handleSizeSelect(size)}
+                          disabled={!isAvailable}
+                          className={`min-w-[48px] px-4 py-2 border text-body-sm transition-colors ${
+                            isSelected
+                              ? "border-accent text-accent bg-accent/10"
+                              : isAvailable
+                              ? "border-border/50 text-foreground hover:border-border"
+                              : "border-border/30 text-muted-foreground/50 cursor-not-allowed line-through"
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
-              {/* Variant Selector */}
-              {hasMultipleVariants && (
-                <div className="mb-8">
+              {/* Other Variant Options (non-size) */}
+              {hasMultipleVariants && !hasSizeOptions && (
+                <div className="mb-6">
                   {product.options.map((option) => (
                     <div key={option.name} className="mb-4">
                       <span className="text-meta text-muted-foreground block mb-3">
@@ -182,18 +265,34 @@ const Product = () => {
                 </div>
               )}
 
-              {/* Price & CTA */}
-              <div className="mt-auto pt-8 border-t border-border">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-display text-2xl text-foreground">
-                    {new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: selectedVariant?.price.currencyCode || "USD",
-                      minimumFractionDigits: 0,
-                    }).format(parseFloat(selectedVariant?.price.amount || "0"))}
-                  </span>
+              {/* Quantity Selector */}
+              <div className="mb-6">
+                <span className="text-meta text-muted-foreground block mb-3">
+                  Quantity
+                </span>
+                <div className="flex items-center gap-4">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="h-10 w-10"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="text-body w-8 text-center">{quantity}</span>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setQuantity((q) => q + 1)}
+                    className="h-10 w-10"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </div>
+              </div>
 
+              {/* CTA */}
+              <div className="mb-8">
                 {status !== "vaulted" ? (
                   <IssueCTAButton
                     status={status}
@@ -203,13 +302,44 @@ const Product = () => {
                     className="w-full"
                   />
                 ) : (
-                  <div className="text-center py-4">
+                  <div className="text-center py-4 border border-border">
                     <span className="text-body text-muted-foreground italic">
                       This item has entered the Vault
                     </span>
                   </div>
                 )}
               </div>
+
+              {/* Expandable Sections */}
+              <Accordion type="single" collapsible className="border-t border-border">
+                <AccordionItem value="story" className="border-b border-border">
+                  <AccordionTrigger className="text-ui py-4">Issue</AccordionTrigger>
+                  <AccordionContent className="text-body text-muted-foreground pb-4">
+                    {product.description || "No story available."}
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="materials" className="border-b border-border">
+                  <AccordionTrigger className="text-ui py-4">Materials</AccordionTrigger>
+                  <AccordionContent className="text-body text-muted-foreground pb-4">
+                    Premium materials selected for durability and comfort. Refer to product tags for specific composition.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="care" className="border-b border-border">
+                  <AccordionTrigger className="text-ui py-4">Care</AccordionTrigger>
+                  <AccordionContent className="text-body text-muted-foreground pb-4">
+                    Professional dry clean only. Store in a cool, dry place away from direct sunlight.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="shipping" className="border-b border-border">
+                  <AccordionTrigger className="text-ui py-4">Shipping & Returns</AccordionTrigger>
+                  <AccordionContent className="text-body text-muted-foreground pb-4">
+                    Standard delivery within 5-7 business days. Returns accepted within 14 days of delivery in original condition.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </div>

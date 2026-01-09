@@ -11,6 +11,19 @@
 
 export type IssueStatus = "acquire" | "limited" | "reserve" | "alert" | "vaulted";
 
+/**
+ * Edition Tier System
+ * Artifact classification, not quantity
+ */
+export type EditionTier = "Origin" | "Essence" | "Offering" | "Relic";
+
+export const EDITION_TIER_CONFIG: Record<EditionTier, { description: string }> = {
+  Origin: { description: "First manifestation" },
+  Essence: { description: "Core expression" },
+  Offering: { description: "Open access" },
+  Relic: { description: "Archived artifact" },
+};
+
 export interface IssueStatusConfig {
   label: string | null; // Badge label (null = no badge)
   ctaLabel: string | null; // Button label (null = no CTA)
@@ -63,6 +76,7 @@ export const FORBIDDEN_TERMS = [
   "almost gone",
   "last chance",
   "running out",
+  "drop", // deprecated concept
 ] as const;
 
 /**

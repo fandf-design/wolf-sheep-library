@@ -21,8 +21,8 @@ const Library = () => {
     return () => scrollEl?.removeEventListener("scroll", handleScroll);
   }, []);
   return <main className="min-h-screen pt-16">
-      {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section - Compact */}
+      <section className="relative py-16 flex items-center justify-center overflow-hidden">
         {/* Background with subtle grain texture */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/10" />
         
@@ -30,17 +30,10 @@ const Library = () => {
         <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
       }} />
-        
-        {/* Decorative editorial guide marks - extremely subtle */}
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-foreground/50 rounded-full" />
-          <div className="absolute bottom-1/3 right-1/3 w-48 h-48 border border-foreground/30 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-px bg-foreground/20" />
-        </div>
 
         <div className="relative z-10 text-center px-6 page-enter">
           
-          <h1 className="text-display-xl mb-6 text-foreground">
+          <h1 className="text-display-xl mb-4 text-foreground">
             The Library
           </h1>
           <p className="text-body max-w-xl mx-auto text-muted-foreground/70 leading-relaxed">
@@ -51,9 +44,9 @@ const Library = () => {
         </div>
       </section>
 
-      {/* Volumes Section */}
-      <section className="relative py-20 overflow-visible">
-        <div className="px-6 md:px-12 mb-12">
+      {/* Volumes Section - Compact */}
+      <section className="relative py-12 overflow-visible">
+        <div className="px-6 md:px-12 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-meta block mb-2">Collection</span>
@@ -69,7 +62,7 @@ const Library = () => {
         </div>
 
         {/* Horizontal Scroll Container */}
-        <div ref={scrollRef} className="scroll-horizontal gap-6 px-6 md:px-12 pb-8">
+        <div ref={scrollRef} className="scroll-horizontal gap-6 px-6 md:px-12 pb-6">
           {volumes.map((volume, index) => <VolumeSpine key={volume.slug} number={volume.number} title={volume.title} subtitle={volume.subtitle} tension={volume.tension} slug={volume.slug} index={index} />)}
           
           {/* End Spacer */}
@@ -77,7 +70,7 @@ const Library = () => {
         </div>
 
         {/* Scroll Progress Indicator */}
-        <div className="px-6 md:px-12 mt-8">
+        <div className="px-6 md:px-12 mt-6">
           <div className="h-px bg-border relative max-w-md">
             <div className="absolute top-0 left-0 h-px bg-gold transition-all duration-300" style={{
             width: `${scrollProgress * 100}%`
@@ -86,10 +79,10 @@ const Library = () => {
         </div>
       </section>
 
-      {/* Archive Statement */}
-      <section className="py-32 px-6 md:px-12">
+      {/* Archive Statement - Compact */}
+      <section className="py-16 px-6 md:px-12">
         <div className="max-w-3xl mx-auto text-center">
-          <blockquote className="text-display-md text-foreground/90 mb-8 leading-relaxed">
+          <blockquote className="text-display-md text-foreground/90 mb-6 leading-relaxed">
             "We are all wolves wearing the wool of sheep,
             <br />
             or sheep with fangs hidden beneath soft smiles."
