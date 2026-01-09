@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "sonner";
 import { volumes, Issue } from "@/data/volumes";
@@ -17,7 +17,7 @@ const sampleIssues: Issue[] = [
     story: "Forged for shoulders that carry more than fabric. This overcoat was designed in the depths of winter, when the studio was silent and the weight of leadership felt heaviest. Every stitch carries the tension of decisions made alone.",
     fabricNotes: "Heavy wool-cashmere blend from Scottish highlands. Lined with silk charmeuse that whispers against movement.",
     craftsmanship: "Hand-finished buttonholes. Horn buttons sourced from ethical farms. Each coat requires 40 hours of construction.",
-    edition: "037/100",
+    edition: "Origin",
     material: "Wool-Cashmere Blend",
     status: "limited",
     price: 2400,
@@ -30,7 +30,7 @@ const sampleIssues: Issue[] = [
     story: "To follow is not weakness—it is strategic patience. This knit envelops the wearer in softness that borders on surrender, yet its construction is rigid, precise, uncompromising in its gentleness.",
     fabricNotes: "Merino wool from New Zealand, spun to 18 microns. Cloud-weight yet structured.",
     craftsmanship: "Seamless construction. Three weeks of hand-knitting per piece. Each carries a unique tension pattern.",
-    edition: "Open Edition",
+    edition: "Offering",
     material: "Fine Merino Wool",
     status: "acquire",
     price: 890,
@@ -43,7 +43,7 @@ const sampleIssues: Issue[] = [
     story: "The hunt begins before dawn. This shirt moves like shadow, catches light like intention. Worn by those who know what they want and move toward it without apology.",
     fabricNotes: "Mulberry silk, 22 momme weight. Deep obsidian with subtle sheen that reveals itself only in motion.",
     craftsmanship: "Mother-of-pearl buttons. French seams throughout. Collar designed to frame without constricting.",
-    edition: "Limited — 24hr Drop",
+    edition: "Relic",
     material: "Mulberry Silk",
     status: "vaulted",
     price: 680,
@@ -56,7 +56,7 @@ const sampleIssues: Issue[] = [
     story: "What remains after you've given everything away? This wrap is both shield and surrender, designed for the moment between ending and beginning.",
     fabricNotes: "Lightweight cashmere blend. Intentionally unfinished edges.",
     craftsmanship: "Single-piece construction. No seams, no closures, only drape.",
-    edition: "Pre-Order",
+    edition: "Essence",
     material: "Cashmere Blend",
     status: "reserve",
     price: 1200,
@@ -69,7 +69,7 @@ const sampleIssues: Issue[] = [
     story: "For the insomniac, the wanderer, the one who finds peace only in empty streets at 3am. This cloak was designed to disappear into darkness.",
     fabricNotes: "Matte black wool. Interior lined with deep navy silk.",
     craftsmanship: "Hand-stitched hem. Weighted corners for dramatic drape.",
-    edition: "Temporarily Unavailable",
+    edition: "Essence",
     material: "Wool-Silk",
     status: "alert",
     price: 1800,
@@ -82,7 +82,6 @@ const Chapter = () => {
   const { volumeSlug, chapterSlug } = useParams();
   const [alertModalOpen, setAlertModalOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
-  const [cartSheetOpen, setCartSheetOpen] = useState(false);
   
   const addItem = useCartStore((state) => state.addItem);
   
@@ -124,7 +123,6 @@ const Chapter = () => {
   }, [addItem]);
 
   const handleAcquireFallback = (issue: Issue) => {
-    // For sample issues without Shopify, show message
     toast.info("Connect Shopify products to enable checkout", {
       position: "top-center",
     });
@@ -175,13 +173,13 @@ const Chapter = () => {
 
   return (
     <main className="min-h-screen pt-16">
-      {/* Chapter Header */}
-      <section className="relative min-h-[60vh] flex items-center justify-center border-b border-border">
+      {/* Chapter Header - Compact */}
+      <section className="relative py-16 flex items-center justify-center border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/20 via-background to-background" />
         
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto page-enter">
           {/* Breadcrumb */}
-          <div className="mb-8">
+          <div className="mb-4">
             <Link to="/" className="text-meta text-muted-foreground hover:text-accent transition-colors">
               Library
             </Link>
@@ -193,7 +191,7 @@ const Chapter = () => {
             <span className="text-meta text-accent/60">Chapter {String(chapterIndex + 1).padStart(2, "0")}</span>
           </div>
 
-          <span className={`inline-block text-meta px-3 py-1 mb-6 ${
+          <span className={`inline-block text-meta px-3 py-1 mb-4 ${
             chapter.status === "published" 
               ? "bg-charcoal text-foreground"
               : chapter.status === "upcoming"
@@ -203,11 +201,11 @@ const Chapter = () => {
             {chapter.status === "out-of-print" ? "Out of Print" : chapter.status}
           </span>
 
-          <h1 className="text-display-xl mb-4">
+          <h1 className="text-display-lg mb-3">
             {chapter.title}
           </h1>
           
-          <p className="text-body text-xl text-muted-foreground italic mb-6">
+          <p className="text-body text-lg text-muted-foreground italic mb-4">
             {chapter.tagline}
           </p>
           
@@ -215,36 +213,29 @@ const Chapter = () => {
         </div>
       </section>
 
-      {/* Narrative */}
-      <section className="py-24 px-6 md:px-12">
+      {/* Narrative - Compact */}
+      <section className="py-12 px-6 md:px-12">
         <div className="max-w-3xl mx-auto">
-          <span className="text-meta block mb-6">Narrative Arc</span>
-          <p className="text-body text-lg text-foreground/90 leading-relaxed mb-12">
+          <span className="text-meta block mb-4">Narrative Arc</span>
+          <p className="text-body text-lg text-foreground/90 leading-relaxed">
             {chapter.narrativeArc}
           </p>
-          
-          <div className="border-l-2 border-accent/30 pl-6">
-            <span className="text-meta text-accent/60 block mb-2">Drop Logic</span>
-            <p className="text-body text-muted-foreground">
-              {chapter.dropLogic}
-            </p>
-          </div>
         </div>
       </section>
 
       {/* Shopify Products */}
       {hasShopifyProducts && (
-        <section className="py-24 px-6 md:px-12 border-t border-border">
+        <section className="py-12 px-6 md:px-12 border-t border-border">
           <div className="max-w-5xl mx-auto">
-            <div className="mb-16">
+            <div className="mb-10">
               <span className="text-meta block mb-2">From the Archive</span>
               <h2 className="text-display-md">Available Issues</h2>
             </div>
 
-            <div className="space-y-16">
+            <div className="space-y-12">
               {shopifyIssues.map((item) => (
                 <article key={item.id} className="group">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Product Image */}
                     <Link 
                       to={`/product/${item.handle}`}
@@ -265,7 +256,7 @@ const Chapter = () => {
                     
                     {/* Content */}
                     <div className="flex flex-col justify-center">
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-3">
                         <IssueStatusBadge status={item.status} />
                         <WishlistButton 
                           issueId={item.id} 
@@ -274,12 +265,12 @@ const Chapter = () => {
                         />
                       </div>
                       <Link to={`/product/${item.handle}`}>
-                        <h3 className="text-display-md text-foreground mb-4 hover:text-accent transition-colors">
+                        <h3 className="text-display-md text-foreground mb-3 hover:text-accent transition-colors">
                           {item.title}
                         </h3>
                       </Link>
                       
-                      <p className="text-body text-muted-foreground leading-relaxed mb-6 line-clamp-3">
+                      <p className="text-body text-muted-foreground leading-relaxed mb-4 line-clamp-3">
                         {item.description}
                       </p>
                       
@@ -321,17 +312,17 @@ const Chapter = () => {
 
       {/* Fallback Sample Issues */}
       {!hasShopifyProducts && issues.length > 0 && (
-        <section className="py-24 px-6 md:px-12 border-t border-border">
+        <section className="py-12 px-6 md:px-12 border-t border-border">
           <div className="max-w-5xl mx-auto">
-            <div className="mb-16">
+            <div className="mb-10">
               <span className="text-meta block mb-2">Artifacts</span>
               <h2 className="text-display-md">Issues</h2>
             </div>
 
-            <div className="space-y-16">
+            <div className="space-y-12">
               {issues.map((issue) => (
                 <article key={issue.id} className="group">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Image Placeholder */}
                     <div className="aspect-[3/4] bg-charcoal/50 border border-border flex items-center justify-center">
                       <span className="text-meta text-muted-foreground">Editorial Image</span>
@@ -339,7 +330,7 @@ const Chapter = () => {
                     
                     {/* Content */}
                     <div className="flex flex-col justify-center">
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-3">
                         <IssueStatusBadge status={issue.status} />
                         <WishlistButton 
                           issueId={issue.id} 
@@ -347,16 +338,16 @@ const Chapter = () => {
                           variant="compact"
                         />
                       </div>
-                      <h3 className="text-display-md text-foreground mb-4">
+                      <h3 className="text-display-md text-foreground mb-3">
                         {issue.title}
                       </h3>
                       
-                      <p className="text-body text-muted-foreground leading-relaxed mb-6">
+                      <p className="text-body text-muted-foreground leading-relaxed mb-4">
                         {issue.story}
                       </p>
                       
                       {/* Metadata */}
-                      <div className="grid grid-cols-2 gap-4 py-6 border-t border-b border-border mb-6">
+                      <div className="grid grid-cols-2 gap-4 py-4 border-t border-b border-border mb-4">
                         <div>
                           <span className="text-meta text-muted-foreground block mb-1">Edition</span>
                           <span className="text-body-sm text-foreground">{issue.edition}</span>
@@ -400,7 +391,7 @@ const Chapter = () => {
       )}
 
       {/* Chapter Navigation */}
-      <section className="py-16 px-6 md:px-12 border-t border-border">
+      <section className="py-12 px-6 md:px-12 border-t border-border">
         <div className="max-w-5xl mx-auto">
           <Link 
             to={`/volume/${volume.slug}`}

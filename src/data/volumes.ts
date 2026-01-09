@@ -1,3 +1,5 @@
+import type { IssueStatus, EditionTier } from "@/types/issue-status";
+
 export interface Volume {
   number: string;
   title: string;
@@ -12,13 +14,10 @@ export interface Chapter {
   title: string;
   tagline: string;
   narrativeArc: string;
-  dropLogic: string;
   timestamp: string;
   status: "published" | "upcoming" | "out-of-print";
   slug: string;
 }
-
-import type { IssueStatus } from "@/types/issue-status";
 
 export interface Issue {
   id: string;
@@ -26,7 +25,7 @@ export interface Issue {
   story: string;
   fabricNotes: string;
   craftsmanship: string;
-  edition: string;
+  edition: EditionTier;
   material: string;
   status: IssueStatus;
   price: number;
@@ -47,7 +46,6 @@ export const volumes: Volume[] = [
         title: "The Alpha Principle",
         tagline: "To lead is to carry the weight of decision.",
         narrativeArc: "This chapter examines the garments worn by those who step forward first—not from ego, but from necessity. Each piece is designed for shoulders that bear responsibility.",
-        dropLogic: "Limited to 100 numbered pieces. First access to archival collectors.",
         timestamp: "Published Spring 2024",
         status: "published",
         slug: "alpha-principle"
@@ -56,7 +54,6 @@ export const volumes: Volume[] = [
         title: "The Omega Rest",
         tagline: "There is power in choosing to follow.",
         narrativeArc: "The omega is not weak. The omega is strategic patience embodied. This chapter celebrates garments that whisper rather than shout.",
-        dropLogic: "Open edition for 7 days only.",
         timestamp: "Published Summer 2024",
         status: "published",
         slug: "omega-rest"
@@ -75,7 +72,6 @@ export const volumes: Volume[] = [
         title: "The Hunt",
         tagline: "Desire, unmasked.",
         narrativeArc: "Raw, unapologetic pieces designed for those who pursue what they want without hesitation. Dark fabrications, aggressive silhouettes, predatory details.",
-        dropLogic: "Flash drop. 24 hours. No restocks.",
         timestamp: "Published Autumn 2024",
         status: "published",
         slug: "the-hunt"
@@ -84,7 +80,6 @@ export const volumes: Volume[] = [
         title: "After Shearing",
         tagline: "Vulnerability as armor.",
         narrativeArc: "What remains after you've given everything away? This chapter explores garments of elegant minimalism—the beauty of having nothing left to lose.",
-        dropLogic: "Pre-order opens January 2025.",
         timestamp: "Upcoming Winter 2025",
         status: "upcoming",
         slug: "after-shearing"
@@ -103,7 +98,6 @@ export const volumes: Volume[] = [
         title: "Solitary Passage",
         tagline: "The journey taken alone.",
         narrativeArc: "Nightwear reimagined. Pieces for the insomniac, the wanderer, the one who finds peace only in empty streets at 3am.",
-        dropLogic: "Monthly subscription box. Members only.",
         timestamp: "Published Winter 2024",
         status: "published",
         slug: "solitary-passage"
@@ -122,7 +116,6 @@ export const volumes: Volume[] = [
         title: "False Alarms",
         tagline: "When truth sounds like lies.",
         narrativeArc: "Statement pieces that challenge perception. Garments that look one way from afar, reveal their true nature only upon close inspection.",
-        dropLogic: "Blind box release. Contents unknown until delivery.",
         timestamp: "Published Spring 2024",
         status: "out-of-print",
         slug: "false-alarms"
@@ -141,7 +134,6 @@ export const volumes: Volume[] = [
         title: "Formation",
         tagline: "Strength in configuration.",
         narrativeArc: "Modular garments designed to work together. When two or more collectors wear pieces from this chapter simultaneously, new patterns emerge.",
-        dropLogic: "Group purchase incentives. Larger groups unlock exclusive colorways.",
         timestamp: "Upcoming Spring 2025",
         status: "upcoming",
         slug: "formation"
@@ -160,7 +152,6 @@ export const volumes: Volume[] = [
         title: "The Binding Breaks",
         tagline: "What was held finally releases.",
         narrativeArc: "Our most ambitious construction to date. Garments with planned obsolescence points—designed to age, tear, and transform over years of wear into something new.",
-        dropLogic: "Auction only. Highest bidders receive pieces with personal mythology attached.",
         timestamp: "Archive Date TBD",
         status: "upcoming",
         slug: "binding-breaks"
