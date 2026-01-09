@@ -1,11 +1,26 @@
 import { useParams, Link } from "react-router-dom";
 import { volumes } from "@/data/volumes";
 import { isVolumeAccessible } from "@/lib/volume-access";
+import { useShopifyProducts } from "@/hooks/use-shopify-products";
+import { IssueGridCard } from "@/components/issue";
+import { mapShopifyToStatus } from "@/types/issue-status";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Volume = () => {
   const { slug } = useParams();
   const volume = volumes.find(v => v.slug === slug);
   const isAccessible = slug ? isVolumeAccessible(slug) : false;
+
+  // Fetch all products for this volume
+  const { data: shopifyProducts, isLoading } = useShopifyProducts(100, `tag:volume:${slug}`);
+
+  // Get products for a specific chapter
+  const getProductsForChapter = (chapterSlug: string) => {
+    if (!shopifyProducts) return [];
+    return shopifyProducts.filter(product =>
+      product.node.tags.includes(`chapter:${chapterSlug}`)
+    );
+  };
 
   if (!volume) {
     return (
@@ -48,7 +63,7 @@ const Volume = () => {
   return (
     <main className="min-h-screen pt-16">
       {/* Volume Header - Compact */}
-      <section className="relative py-16 flex items-center justify-center">
+      <section className="relative py-12 flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/30 via-background to-background" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto page-enter">
@@ -61,11 +76,11 @@ const Volume = () => {
             <span className="text-meta text-accent/60">Volume {volume.number}</span>
           </div>
 
-          <h1 className="text-display-xl mb-4">
+          <h1 className="text-display-xl mb-3">
             {volume.title}
           </h1>
           
-          <p className="text-body text-xl text-muted-foreground mb-3">
+          <p className="text-body text-lg text-muted-foreground mb-3">
             {volume.subtitle}
           </p>
           
@@ -76,9 +91,9 @@ const Volume = () => {
       </section>
 
       {/* Manifesto - Compact */}
-      <section className="py-12 px-6 md:px-12">
+      <section className="py-8 px-6 md:px-12">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-4">
+          <div className="mb-3">
             <span className="text-meta block">Manifesto</span>
           </div>
           <p className="text-body text-lg text-foreground/90 leading-relaxed">
@@ -87,57 +102,96 @@ const Volume = () => {
         </div>
       </section>
 
-      {/* Chapters with Issues inline */}
+      {/* Chapters with Issues Grid */}
       <section className="py-12 px-6 md:px-12 border-t border-border">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8">
             <span className="text-meta block mb-2">Contents</span>
             <h2 className="text-display-md">Chapters</h2>
           </div>
 
-          <div className="space-y-12">
-            {volume.chapters.map((chapter, index) => (
-              <section key={chapter.slug} className="border-t border-border pt-8 first:border-t-0 first:pt-0">
-                {/* Chapter Header */}
-                <Link
-                  to={`/volume/${volume.slug}/chapter/${chapter.slug}`}
-                  className="group block mb-6"
-                >
-                  <div className="flex items-center gap-4 mb-2">
-                    <span className="text-meta text-accent/60">
-                      Chapter {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className={`text-meta px-2 py-0.5 ${
-                      chapter.status === "published" 
-                        ? "bg-charcoal text-foreground"
-                        : chapter.status === "upcoming"
-                        ? "border border-accent/30 text-accent/80"
-                        : "border border-muted-foreground/30 text-muted-foreground"
-                    }`}>
-                      {chapter.status === "out-of-print" ? "Out of Print" : chapter.status}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-display-md text-foreground group-hover:text-accent transition-colors mb-1">
-                    {chapter.title}
-                  </h3>
-                  
-                  <p className="text-body text-muted-foreground italic">
-                    {chapter.tagline}
-                  </p>
-                </Link>
-
-                {/* Issues placeholder - would be populated from Shopify */}
-                <div className="pl-0 md:pl-8">
+          <div className="space-y-16">
+            {volume.chapters.map((chapter, index) => {
+              const chapterProducts = getProductsForChapter(chapter.slug);
+              
+              return (
+                <section key={chapter.slug} className="border-t border-border pt-8 first:border-t-0 first:pt-0">
+                  {/* Chapter Header */}
                   <Link
                     to={`/volume/${volume.slug}/chapter/${chapter.slug}`}
-                    className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-accent transition-colors"
+                    className="group block mb-6"
                   >
-                    <span>View Issues →</span>
+                    <div className="flex items-center gap-4 mb-2">
+                      <span className="text-meta text-accent/60">
+                        Chapter {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className={`text-meta px-2 py-0.5 ${
+                        chapter.status === "published" 
+                          ? "bg-charcoal text-foreground"
+                          : chapter.status === "upcoming"
+                          ? "border border-accent/30 text-accent/80"
+                          : "border border-muted-foreground/30 text-muted-foreground"
+                      }`}>
+                        {chapter.status === "out-of-print" ? "Out of Print" : chapter.status}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-display-md text-foreground group-hover:text-accent transition-colors mb-1">
+                      {chapter.title}
+                    </h3>
+                    
+                    <p className="text-body text-muted-foreground italic">
+                      {chapter.tagline}
+                    </p>
                   </Link>
-                </div>
-              </section>
-            ))}
+
+                  {/* Issues Grid */}
+                  <div className="mt-6">
+                    {isLoading ? (
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {[1, 2, 3, 4].map((i) => (
+                          <div key={i} className="space-y-3">
+                            <Skeleton className="aspect-[3/4] w-full" />
+                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-3 w-1/2" />
+                          </div>
+                        ))}
+                      </div>
+                    ) : chapterProducts.length > 0 ? (
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {chapterProducts.map((product) => {
+                          const variant = product.node.variants.edges[0]?.node;
+                          if (!variant) return null;
+                          
+                          return (
+                            <IssueGridCard
+                              key={product.node.id}
+                              handle={product.node.handle}
+                              title={product.node.title}
+                              price={parseFloat(variant.price.amount)}
+                              currencyCode={variant.price.currencyCode}
+                              status={mapShopifyToStatus(
+                                variant.availableForSale,
+                                !!product.node.publishedAt,
+                                product.node.tags
+                              )}
+                              image={product.node.images.edges[0]?.node}
+                            />
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <Link
+                        to={`/volume/${volume.slug}/chapter/${chapter.slug}`}
+                        className="inline-flex items-center gap-2 text-ui text-muted-foreground hover:text-accent transition-colors"
+                      >
+                        <span>View Chapter →</span>
+                      </Link>
+                    )}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </div>
       </section>
