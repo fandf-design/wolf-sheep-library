@@ -6,13 +6,19 @@ export function useShopifyProducts(first: number = 50, query?: string) {
   return useQuery({
     queryKey: ["shopify-products", first, query],
     queryFn: async (): Promise<ShopifyProduct[]> => {
-      const response = await storefrontApiRequest<ShopifyProductsResponse>(PRODUCTS_QUERY, {
-        first,
-        query: query || null,
-      });
-      return response.data.products.edges;
+      try {
+        const response = await storefrontApiRequest<ShopifyProductsResponse>(PRODUCTS_QUERY, {
+          first,
+          query: query || null,
+        });
+        return response.data.products.edges;
+      } catch (error) {
+        console.error("Failed to fetch Shopify products:", error);
+        return [];
+      }
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: 2,
   });
 }
 
