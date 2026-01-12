@@ -117,10 +117,14 @@
        PARCHMENT THEME: Ink + Midnight Blue
        Ink provides all critical legibility.
        Midnight blue marks structure, annotation, and interaction.
+       Blue never replaces ink. Blue never becomes content.
        ═══════════════════════════════════════════════════════════════ */
     
-    /* CRITICAL: Override gold to midnight blue in light theme */
-    --gold: 210 22% 24%;                /* midnight blue replaces gold */
+    /* LOCKED ACCENT: Midnight Blue (210 26% 24%)
+       Slightly stronger chroma than original.
+       Clear differentiation from ink without competing.
+       Reveals blue character only in context. */
+    --gold: 210 26% 24%;                /* midnight blue replaces gold */
     
     /* Core Surfaces (warm parchment hierarchy) */
     --background: 40 26% 97%;           /* primary parchment */
@@ -145,46 +149,49 @@
     --input: 220 8% 70%;                /* form borders */
     
     /* ═══════════════════════════════════════════════════════════════
-       ACCENT SYSTEM (Midnight Blue)
+       ACCENT SYSTEM (Midnight Blue 210 26% 24%)
        Blue is always paired with ink contrast for immediate legibility.
+       Usage: focus rings, active states, selected variants, link hover,
+              section rules/markers. Never for body text, headings,
+              large fills, decorative elements, or brand marks.
        ═══════════════════════════════════════════════════════════════ */
     
     /* Core Accent Token */
-    --accent: 210 22% 24%;              /* midnight blue base */
-    --accent-foreground: 40 26% 97%;    /* parchment on blue (14:1 contrast) */
-    --accent-muted: 210 18% 34%;        /* subdued blue for secondary emphasis */
-    --accent-subtle: 210 16% 92%;       /* blue-tinted surface (near parchment) */
+    --accent: 210 26% 24%;              /* midnight blue (locked) */
+    --accent-foreground: 40 26% 97%;    /* parchment on blue */
+    --accent-muted: 210 22% 34%;        /* subdued blue for secondary emphasis */
+    --accent-subtle: 210 18% 92%;       /* blue-tinted surface (near parchment) */
     
     /* Focus Ring System */
     --ring: 220 12% 7%;                 /* ink primary ring */
-    --ring-accent: 210 22% 24%;         /* blue reinforcement ring */
+    --ring-accent: 210 26% 24%;         /* blue reinforcement ring (locked) */
     --ring-offset: 40 26% 97%;          /* parchment offset */
     
     /* Active State Tokens */
     --active-bg: 40 16% 89%;            /* warm surface for active state */
-    --active-border: 210 22% 24%;       /* blue indicator */
+    --active-border: 210 26% 24%;       /* blue indicator (locked) */
     --active-text: 220 12% 7%;          /* ink for legibility */
     
     /* Selected State Tokens */
     --selected-bg: 40 18% 94%;          /* elevated parchment */
-    --selected-border: 210 22% 24%;     /* blue border */
+    --selected-border: 210 26% 24%;     /* blue border (locked) */
     --selected-text: 220 12% 7%;        /* ink text */
     --selected-indicator: 220 12% 7%;   /* ink checkmark/indicator */
     
     /* Link Hover Tokens */
     --link-hover-bg: 40 22% 95%;        /* subtle parchment lift */
-    --link-hover-text: 210 22% 24%;     /* blue text */
-    --link-hover-underline: 210 22% 24%; /* blue underline */
+    --link-hover-text: 210 26% 24%;     /* blue text (locked) */
+    --link-hover-underline: 210 26% 24%; /* blue underline (locked) */
     
     /* Section Rules & Markers */
     --rule-default: 220 8% 72%;         /* diluted ink for standard rules */
-    --rule-emphasis: 210 22% 24%;       /* blue for semantic emphasis */
-    --marker-active: 210 22% 24%;       /* blue marker for current item */
+    --rule-emphasis: 210 26% 24%;       /* blue for semantic emphasis (locked) */
+    --marker-active: 210 26% 24%;       /* blue marker for current item (locked) */
     --marker-dot: 220 12% 7%;           /* ink dot indicator */
     
     /* Link Colors */
     --link: 220 12% 7%;                 /* default link (ink) */
-    --link-hover: 210 22% 24%;          /* hover state (midnight blue) */
+    --link-hover: 210 26% 24%;          /* hover state (locked) */
     --link-visited: 220 10% 32%;        /* visited (muted ink) */
     
     /* Status & Feedback */
@@ -209,7 +216,7 @@
 
   .light .badge--active,
   .light .status-pill--active {
-    border-color: hsl(210 22% 24%); /* blue when active */
+    border-color: hsl(210 26% 24%); /* locked midnight blue */
   }
 
   .light .status-pill--published,
@@ -226,7 +233,7 @@
   }
 
   .light .divider--emphasis {
-    border-color: hsl(210 22% 24%); /* blue for semantic weight */
+    border-color: hsl(210 26% 24%); /* locked midnight blue */
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -389,121 +396,121 @@
 
   .light .button-secondary:hover {
     background: hsl(40 18% 94%);
-    border-color: hsl(210 22% 24%);
+    border-color: hsl(210 26% 24%); /* locked midnight blue */
   }
 
   /* Selected States (checkboxes, radio, tabs) */
   .light [data-state="checked"],
   .light [aria-selected="true"] {
-    border-color: hsl(210 22% 24%);
+    border-color: hsl(210 26% 24%); /* locked midnight blue */
     background: hsl(40 18% 94%);
   }
 
   /* ═══════════════════════════════════════════════════════════════
      LIGHT THEME: Gold → Midnight Blue Comprehensive Overrides
-     All direct gold usages converted to midnight blue
+     All direct gold usages converted to locked midnight blue (210 26% 24%)
      ═══════════════════════════════════════════════════════════════ */
 
   /* Text gold classes → midnight blue */
   .light .text-gold {
-    color: hsl(210 22% 24%);
+    color: hsl(210 26% 24%);
   }
 
   .light .text-gold\/60,
   .light .text-gold\/40,
   .light .text-gold\/80 {
-    color: hsl(210 22% 24% / 0.7);
+    color: hsl(210 26% 24% / 0.7);
   }
 
   /* Background gold classes → midnight blue */
   .light .bg-gold {
-    background-color: hsl(210 22% 24%);
+    background-color: hsl(210 26% 24%);
   }
 
   .light .bg-gold\/10,
   .light .bg-gold\/20,
   .light .bg-gold\/30 {
-    background-color: hsl(210 22% 24% / 0.15);
+    background-color: hsl(210 26% 24% / 0.15);
   }
 
   /* Border gold classes → midnight blue */
   .light .border-gold {
-    border-color: hsl(210 22% 24%);
+    border-color: hsl(210 26% 24%);
   }
 
   .light .border-gold\/20,
   .light .border-gold\/30,
   .light .border-gold\/40,
   .light .border-gold\/50 {
-    border-color: hsl(210 22% 24% / 0.4);
+    border-color: hsl(210 26% 24% / 0.4);
   }
 
   /* Hover states with gold → midnight blue */
   .light .hover\:border-gold:hover {
-    border-color: hsl(210 22% 24%);
+    border-color: hsl(210 26% 24%);
   }
 
   .light .hover\:text-gold:hover {
-    color: hsl(210 22% 24%);
+    color: hsl(210 26% 24%);
   }
 
   .light .hover\:bg-gold:hover {
-    background-color: hsl(210 22% 24%);
+    background-color: hsl(210 26% 24%);
   }
 
   /* Glow and shadow overrides */
   .light .glow-gold {
-    box-shadow: 0 0 30px -10px hsl(210 22% 24% / 0.2);
+    box-shadow: 0 0 30px -10px hsl(210 26% 24% / 0.2);
   }
 
   /* Volume spine light theme override */
   .light .volume-spine:hover {
-    border-color: hsl(210 22% 24% / 0.5);
-    box-shadow: 0 16px 32px -12px hsl(210 22% 24% / 0.1);
+    border-color: hsl(210 26% 24% / 0.5);
+    box-shadow: 0 16px 32px -12px hsl(210 26% 24% / 0.1);
   }
 
   .light .volume-spine::before {
     background: linear-gradient(
       90deg,
       transparent,
-      hsl(210 22% 24% / 0.3),
+      hsl(210 26% 24% / 0.3),
       transparent
     );
   }
 
   /* Gold shimmer → blue shimmer in light theme */
   .light .bg-gold-shimmer {
-    background-image: linear-gradient(90deg, transparent, hsl(210 22% 24% / 0.08), transparent);
+    background-image: linear-gradient(90deg, transparent, hsl(210 26% 24% / 0.08), transparent);
   }
 
   /* Border-gold utility class override */
   .light .border-gold {
-    border: 2px solid hsl(210 22% 24% / 0.4);
+    border: 2px solid hsl(210 26% 24% / 0.4);
   }
 
-  /* Accent text in light theme uses ink, not accent color for readability */
+  /* Accent text in light theme uses locked midnight blue */
   .light .text-accent {
-    color: hsl(210 22% 24%);
+    color: hsl(210 26% 24%);
   }
 
   .light .text-accent\/40,
   .light .text-accent\/60,
   .light .text-accent\/80 {
-    color: hsl(210 22% 24% / 0.6);
+    color: hsl(210 26% 24% / 0.6);
   }
 
   /* Hover accent states */
   .light .hover\:text-accent:hover {
-    color: hsl(210 22% 24%);
+    color: hsl(210 26% 24%);
   }
 
   .light .hover\:bg-accent:hover {
-    background-color: hsl(210 22% 24%);
+    background-color: hsl(210 26% 24%);
   }
 
   .light .hover\:border-accent:hover,
   .light .hover\:border-accent\/20:hover {
-    border-color: hsl(210 22% 24% / 0.5);
+    border-color: hsl(210 26% 24% / 0.5);
   }
 }
 
@@ -531,7 +538,7 @@
   }
 
   .light ::selection {
-    background: hsl(210 22% 24% / 0.2);
+    background: hsl(210 26% 24% / 0.2);
     color: hsl(220 12% 7%);
   }
 }
@@ -735,17 +742,17 @@
     transition: width var(--duration-medium) var(--ease-refined);
   }
 
-  /* Light theme: archival links use ink, midnight blue on hover */
+  /* Light theme: archival links use ink, locked midnight blue on hover */
   .light .link-archival::after {
     background: hsl(220 12% 7%);
   }
 
   .light .link-archival:hover {
-    color: hsl(210 22% 24%);
+    color: hsl(210 26% 24%); /* locked midnight blue */
   }
 
   .light .link-archival:hover::after {
-    background: hsl(210 22% 24%);
+    background: hsl(210 26% 24%); /* locked midnight blue */
   }
   
   .link-archival:hover {
