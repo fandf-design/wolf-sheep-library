@@ -109,6 +109,7 @@ export default {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gold-shimmer": "linear-gradient(90deg, transparent, hsl(var(--gold) / 0.1), transparent)",
+        "blue-shimmer": "linear-gradient(90deg, transparent, hsl(210 22% 24% / 0.08), transparent)",
       },
     },
   },
