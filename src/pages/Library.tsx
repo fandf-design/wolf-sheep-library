@@ -119,16 +119,19 @@ const Library = () => {
             <div>
               <h4 className="text-ui mb-6 text-foreground">Information</h4>
               <ul className="space-y-3">
-                <li><span className="text-body-sm text-muted-foreground">Shipping</span></li>
-                <li><span className="text-body-sm text-muted-foreground">Returns</span></li>
-                <li><span className="text-body-sm text-muted-foreground">Contact</span></li>
+                <li><a href="/policies/shipping" className="text-body-sm text-muted-foreground hover:text-foreground transition-colors">Shipping</a></li>
+                <li><a href="/policies/returns" className="text-body-sm text-muted-foreground hover:text-foreground transition-colors">Returns</a></li>
+                <li><a href="/contact" className="text-body-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a></li>
               </ul>
             </div>
           </div>
           
           <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
             <span className="text-meta">© MMXXV Fang & Fleece</span>
-            <span className="text-meta">All garments are artifacts. All artifacts are stories.</span>
+            <div className="flex items-center gap-6">
+              <a href="/policies/privacy" className="text-meta text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
+              <a href="/policies/terms" className="text-meta text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+            </div>
           </div>
         </div>
       </footer>

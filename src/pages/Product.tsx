@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2, Minus, Plus } from "lucide-react";
 import { useShopifyProduct } from "@/hooks/use-shopify-products";
 import { useCartStore } from "@/stores/cartStore";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { IssueStatusBadge, IssueCTAButton } from "@/components/issue";
 import { WishlistButton } from "@/components/shelf";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,9 @@ const Product = () => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Dynamic page title
+  usePageTitle(product?.title);
 
   if (isLoading) {
     return (

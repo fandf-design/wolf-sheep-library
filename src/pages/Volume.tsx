@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { volumes } from "@/data/volumes";
 import { isVolumeAccessible } from "@/lib/volume-access";
 import { useShopifyProducts } from "@/hooks/use-shopify-products";
+import { usePageTitle } from "@/hooks/use-page-title";
 import { IssueGridCard } from "@/components/issue";
 import { mapShopifyToStatus } from "@/types/issue-status";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +14,9 @@ const Volume = () => {
 
   // Fetch all products (no query filter - Storefront API has limited query support)
   const { data: shopifyProducts, isLoading } = useShopifyProducts(100);
+
+  // Dynamic page title
+  usePageTitle(volume?.title ? `${volume.title} — Volume ${volume.number}` : undefined);
 
   // Get products for a specific chapter by filtering tags client-side
   const getProductsForChapter = (chapterSlug: string) => {
