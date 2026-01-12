@@ -193,7 +193,7 @@ const Chapter = () => {
 
           <span className={`inline-block text-meta px-3 py-1 mb-4 ${
             chapter.status === "published" 
-              ? "bg-charcoal text-foreground"
+              ? "bg-secondary text-secondary-foreground border border-border"
               : chapter.status === "upcoming"
               ? "border border-accent/30 text-accent/80"
               : "border border-muted-foreground/30 text-muted-foreground"
