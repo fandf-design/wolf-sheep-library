@@ -131,7 +131,7 @@ const Volume = () => {
                       </span>
                       <span className={`text-meta px-2 py-0.5 ${
                         chapter.status === "published" 
-                          ? "bg-charcoal text-foreground"
+                          ? "bg-secondary text-secondary-foreground border border-border"
                           : chapter.status === "upcoming"
                           ? "border border-accent/30 text-accent/80"
                           : "border border-muted-foreground/30 text-muted-foreground"
