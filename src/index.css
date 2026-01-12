@@ -86,6 +86,9 @@
        Midnight blue marks structure, annotation, and interaction.
        ═══════════════════════════════════════════════════════════════ */
     
+    /* CRITICAL: Override gold to midnight blue in light theme */
+    --gold: 210 22% 24%;                /* midnight blue replaces gold */
+    
     /* Core Surfaces (warm parchment hierarchy) */
     --background: 40 26% 97%;           /* primary parchment */
     --card: 40 20% 93%;                 /* elevated parchment */
@@ -226,6 +229,113 @@
   .light [aria-selected="true"] {
     border-color: hsl(210 22% 24%);
     background: hsl(40 18% 94%);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     LIGHT THEME: Gold → Midnight Blue Comprehensive Overrides
+     All direct gold usages converted to midnight blue
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Text gold classes → midnight blue */
+  .light .text-gold {
+    color: hsl(210 22% 24%);
+  }
+
+  .light .text-gold\/60,
+  .light .text-gold\/40,
+  .light .text-gold\/80 {
+    color: hsl(210 22% 24% / 0.7);
+  }
+
+  /* Background gold classes → midnight blue */
+  .light .bg-gold {
+    background-color: hsl(210 22% 24%);
+  }
+
+  .light .bg-gold\/10,
+  .light .bg-gold\/20,
+  .light .bg-gold\/30 {
+    background-color: hsl(210 22% 24% / 0.15);
+  }
+
+  /* Border gold classes → midnight blue */
+  .light .border-gold {
+    border-color: hsl(210 22% 24%);
+  }
+
+  .light .border-gold\/20,
+  .light .border-gold\/30,
+  .light .border-gold\/40,
+  .light .border-gold\/50 {
+    border-color: hsl(210 22% 24% / 0.4);
+  }
+
+  /* Hover states with gold → midnight blue */
+  .light .hover\:border-gold:hover {
+    border-color: hsl(210 22% 24%);
+  }
+
+  .light .hover\:text-gold:hover {
+    color: hsl(210 22% 24%);
+  }
+
+  .light .hover\:bg-gold:hover {
+    background-color: hsl(210 22% 24%);
+  }
+
+  /* Glow and shadow overrides */
+  .light .glow-gold {
+    box-shadow: 0 0 30px -10px hsl(210 22% 24% / 0.2);
+  }
+
+  /* Volume spine light theme override */
+  .light .volume-spine:hover {
+    border-color: hsl(210 22% 24% / 0.5);
+    box-shadow: 0 16px 32px -12px hsl(210 22% 24% / 0.1);
+  }
+
+  .light .volume-spine::before {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(210 22% 24% / 0.3),
+      transparent
+    );
+  }
+
+  /* Gold shimmer → blue shimmer in light theme */
+  .light .bg-gold-shimmer {
+    background-image: linear-gradient(90deg, transparent, hsl(210 22% 24% / 0.08), transparent);
+  }
+
+  /* Border-gold utility class override */
+  .light .border-gold {
+    border: 2px solid hsl(210 22% 24% / 0.4);
+  }
+
+  /* Accent text in light theme uses ink, not accent color for readability */
+  .light .text-accent {
+    color: hsl(210 22% 24%);
+  }
+
+  .light .text-accent\/40,
+  .light .text-accent\/60,
+  .light .text-accent\/80 {
+    color: hsl(210 22% 24% / 0.6);
+  }
+
+  /* Hover accent states */
+  .light .hover\:text-accent:hover {
+    color: hsl(210 22% 24%);
+  }
+
+  .light .hover\:bg-accent:hover {
+    background-color: hsl(210 22% 24%);
+  }
+
+  .light .hover\:border-accent:hover,
+  .light .hover\:border-accent\/20:hover {
+    border-color: hsl(210 22% 24% / 0.5);
   }
 }
 
