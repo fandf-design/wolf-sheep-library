@@ -82,7 +82,7 @@
   .light {
     /* Paper + ink */
     --background: 40 28% 96%;          /* parchment */
-    --foreground: 240 10% 8%;          /* deep ink - strengthened */
+    --foreground: 240 10% 8%;          /* deep ink */
     
     /* Surfaces */
     --card: 40 20% 91%;
@@ -102,18 +102,18 @@
     --muted: 40 12% 89%;
     --muted-foreground: 240 9% 28%;
     
-    /* Accent (quiet bullion, not web-yellow) */
-    --accent: 43 36% 34%;
+    /* Accent (midnight blue - editorial ink, not gold) */
+    --accent: 210 18% 25%;
     --accent-foreground: 40 28% 96%;
     
-    /* Structural lines + inputs - strengthened */
+    /* Structural lines + inputs */
     --border: 240 8% 68%;
     --input: 240 8% 68%;
-    --ring: 240 10% 8%;                 /* ink primary for focus */
+    --ring: 210 18% 25%;               /* midnight blue for focus */
     
-    /* Optional: link colors */
+    /* Link colors */
     --link: 240 10% 8%;
-    --link-hover: 43 36% 34%;
+    --link-hover: 210 18% 25%;         /* midnight blue */
   }
 
   /* Light theme status pills — archival, never black */
@@ -138,25 +138,41 @@
     border-color: hsl(240 8% 68%);
   }
 
-  /* Light theme focus ring system - ink primary, gold reinforcement */
+  /* Light theme focus ring system - ink primary, blue reinforcement */
   .light *:focus-visible {
     outline: 2px solid hsl(240 10% 8%);
     outline-offset: 2px;
-    box-shadow: inset 0 0 0 1px hsl(43 36% 34%);
+    box-shadow: inset 0 0 0 1px hsl(210 18% 25%);
   }
 
-  /* Light theme hover states - background change, not gold-only */
-  .light button:hover:not(:disabled),
-  .light a:hover {
+  /* Light theme hover states - background change */
+  .light button:hover:not(:disabled) {
     background-color: hsl(40 24% 94%);
   }
 
-  /* Light theme active/selected states - ink indicator */
+  .light a:hover {
+    color: hsl(210 18% 25%);
+  }
+
+  /* Light theme active/selected states - ink primary, blue reinforcement */
   .light .active,
   .light [aria-current="page"] {
     background: hsl(40 18% 92%);
     color: hsl(240 10% 8%);
-    border-left: 3px solid hsl(240 10% 8%);
+    border-left: 3px solid hsl(210 18% 25%);
+  }
+
+  /* Light theme selected/checked states */
+  .light input:checked + label,
+  .light .selected {
+    background: hsl(40 18% 92%);
+    border: 1px solid hsl(210 18% 25%);
+  }
+
+  /* Light theme active badges/chips */
+  .light .badge--active,
+  .light .chip--selected {
+    border-color: hsl(210 18% 25%);
   }
 }
 
