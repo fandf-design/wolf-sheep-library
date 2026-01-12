@@ -20,20 +20,22 @@ const ChronicleEntry = () => {
       {/* Header */}
       <section className="py-24 px-6 md:px-12 border-b border-border">
         <div className="max-w-3xl mx-auto page-enter">
+          {/* Back link: ink-based hover */}
           <Link 
             to="/chronicle" 
-            className="inline-flex items-center gap-2 text-meta text-muted-foreground hover:text-gold transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-meta text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Chronicle
           </Link>
 
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-meta text-gold/60">{entry.category}</span>
-            <span className="text-meta text-muted-foreground">•</span>
-            <span className="text-meta text-muted-foreground">{entry.date}</span>
-            <span className="text-meta text-muted-foreground">•</span>
-            <span className="text-meta text-muted-foreground">{entry.readTime}</span>
+            {/* Category: muted, not gold */}
+            <span className="text-meta text-muted-foreground">{entry.category}</span>
+            <span className="text-meta text-muted-foreground/60">•</span>
+            <span className="text-meta text-muted-foreground/60">{entry.date}</span>
+            <span className="text-meta text-muted-foreground/60">•</span>
+            <span className="text-meta text-muted-foreground/60">{entry.readTime}</span>
           </div>
           
           <h1 className="text-display-xl mb-6">{entry.title}</h1>
@@ -60,6 +62,7 @@ const ChronicleEntry = () => {
       <section className="py-16 px-6 md:px-12 border-t border-border">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-start gap-8">
+            {/* Prev/Next: ink-based hover, not gold */}
             {prevEntry ? (
               <Link 
                 to={`/chronicle/${prevEntry.slug}`}
@@ -67,8 +70,8 @@ const ChronicleEntry = () => {
               >
                 <span className="text-meta text-muted-foreground mb-2 block">Previous</span>
                 <div className="flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-gold transition-colors" />
-                  <span className="text-body text-foreground group-hover:text-gold transition-colors">
+                  <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <span className="text-body text-foreground/80 group-hover:text-foreground transition-colors">
                     {prevEntry.title}
                   </span>
                 </div>
@@ -84,10 +87,10 @@ const ChronicleEntry = () => {
               >
                 <span className="text-meta text-muted-foreground mb-2 block">Next</span>
                 <div className="flex items-center justify-end gap-2">
-                  <span className="text-body text-foreground group-hover:text-gold transition-colors">
+                  <span className="text-body text-foreground/80 group-hover:text-foreground transition-colors">
                     {nextEntry.title}
                   </span>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-gold transition-colors" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
               </Link>
             ) : (
