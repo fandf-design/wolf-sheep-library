@@ -15,11 +15,6 @@
     --gold: 43 50% 55%;
     --steel: 220 10% 60%;
     
-    /* Ink variants for contrast (dark theme) */
-    --ink-primary: 40 23% 87%;      /* bone - primary ink on dark */
-    --ink-secondary: 40 18% 70%;    /* muted bone */
-    --ink-tertiary: 40 12% 55%;     /* subdued */
-    
     /* Semantic Tokens */
     --background: var(--obsidian);
     --foreground: var(--bone);
@@ -37,7 +32,7 @@
     --secondary-foreground: var(--bone);
     
     --muted: 240 4% 12%;
-    --muted-foreground: 40 18% 70%;
+    --muted-foreground: 40 10% 55%;
     
     --accent: var(--gold);
     --accent-foreground: var(--obsidian);
@@ -45,11 +40,9 @@
     --destructive: 0 62% 30%;
     --destructive-foreground: var(--bone);
     
-    /* Borders: bone-based for visibility on dark, not gold */
-    --border: 40 10% 25%;
-    --input: 40 10% 25%;
-    /* Ring: primary ink first, gold as inner accent only */
-    --ring: var(--bone);
+    --border: 240 4% 15%;
+    --input: 240 4% 15%;
+    --ring: var(--gold);
     
     --radius: 0rem;
     
@@ -79,19 +72,17 @@
     --secondary: var(--charcoal);
     --secondary-foreground: var(--bone);
     --muted: 240 4% 12%;
-    --muted-foreground: 40 18% 70%;
+    --muted-foreground: 40 10% 55%;
     --accent: var(--gold);
     --accent-foreground: var(--obsidian);
-    /* Bone-based borders for structural visibility */
-    --border: 40 10% 25%;
-    --input: 40 10% 25%;
-    --ring: var(--bone);
+    --border: 240 4% 15%;
+    --input: 240 4% 15%;
   }
 
   .light {
     /* Paper + ink */
-    --background: 40 28% 96%;          /* parchment #FAF8F4 */
-    --foreground: 240 9% 12%;          /* deep ink #1A1A1F - WCAG AA compliant */
+    --background: 40 28% 96%;          /* parchment */
+    --foreground: 240 9% 12%;          /* deep ink */
     
     /* Surfaces */
     --card: 40 22% 93%;
@@ -99,7 +90,7 @@
     --popover: 40 26% 95%;
     --popover-foreground: 240 9% 12%;
     
-    /* Primary UI - ink based */
+    /* Primary UI */
     --primary: 240 9% 12%;
     --primary-foreground: 40 28% 96%;
     
@@ -107,46 +98,44 @@
     --secondary: 40 18% 89%;
     --secondary-foreground: 240 8% 20%;
     
-    /* Muted - must meet 4.5:1 contrast on parchment */
+    /* Muted (must remain readable) */
     --muted: 40 14% 91%;
-    --muted-foreground: 240 6% 29%;    /* #464650 - 7.1:1 contrast */
+    --muted-foreground: 240 7% 34%;
     
-    /* Accent (muted gold - ceremonial only, never functional alone) */
-    --accent: 43 36% 34%;               /* #8A6A2F approx */
+    /* Accent (quiet bullion, not web-yellow) */
+    --accent: 43 36% 34%;
     --accent-foreground: 40 28% 96%;
     
-    /* Structural lines - ink-based, visible at a glance */
-    --border: 240 5% 72%;               /* #B5B5BC - clear ink rule */
-    --input: 240 5% 72%;
-    /* Ring: ink primary, gold may reinforce but never alone */
-    --ring: 240 9% 12%;
+    /* Structural lines + inputs */
+    --border: 240 6% 80%;
+    --input: 240 6% 82%;
+    --ring: 43 36% 34%;
     
-    /* Ink variants for light theme */
-    --ink-primary: 240 9% 12%;          /* deep ink */
-    --ink-secondary: 240 6% 29%;        /* readable grey */
-    --ink-tertiary: 240 5% 42%;         /* subtle but visible */
+    /* Optional: link colors */
+    --link: 240 9% 12%;
+    --link-hover: 43 36% 34%;
   }
 
-  /* Light theme status pills — archival, ink-based */
+  /* Light theme status pills — archival, never black */
   .light .status-pill,
   .light .badge,
   .light .chip {
-    background: hsl(40 18% 92%);
-    color: hsl(240 6% 29%);
-    border: 1px solid hsl(240 5% 72%);
+    background: hsl(40 18% 90%);
+    color: hsl(240 7% 30%);
+    border: 1px solid hsl(240 6% 82%);
   }
 
   .light .status-pill--published,
   .light .badge--published {
     background: transparent;
-    color: hsl(240 6% 29%);
-    border: 1px solid hsl(240 5% 72%);
+    color: hsl(240 7% 34%);
+    border: 1px solid hsl(240 6% 84%);
   }
 
-  /* Light theme dividers: ink rules on paper */
+  /* Light theme dividers: visible but not loud */
   .light hr,
   .light .divider {
-    border-color: hsl(240 5% 72%);
+    border-color: hsl(240 6% 82%);
   }
 }
 
@@ -168,16 +157,9 @@
     line-height: 1.6;
   }
   
-  /* Selection: gold as symbolic accent, paired with sufficient contrast */
   ::selection {
-    background: hsl(var(--gold) / 0.25);
-    color: hsl(var(--foreground));
-  }
-  
-  /* Focus: ink-based primary ring (2px min), gold as optional inner accent */
-  :focus-visible {
-    outline: 2px solid hsl(var(--ring));
-    outline-offset: 2px;
+    background: hsl(var(--gold) / 0.3);
+    color: hsl(var(--bone));
   }
 }
 
@@ -236,17 +218,16 @@
     color: hsl(var(--muted-foreground));
   }
   
-  /* Archival Borders - ink-based, not gold */
+  /* Archival Borders */
   .border-archival {
     border: 1px solid hsl(var(--border));
   }
   
-  /* Gold border: 2px minimum, ceremonial use only */
   .border-gold {
-    border: 2px solid hsl(var(--gold) / 0.5);
+    border: 1px solid hsl(var(--gold) / 0.3);
   }
   
-  /* Volume Spine - hover uses bone border, gold as subtle shimmer */
+  /* Volume Spine */
   .volume-spine {
     @apply relative flex flex-col justify-end p-6;
     min-width: 280px;
@@ -263,11 +244,9 @@
   }
   
   .volume-spine:hover {
-    /* Primary: bone border for visibility */
-    border-color: hsl(var(--bone) / 0.6);
+    border-color: hsl(var(--gold) / 0.4);
     transform: translateY(-6px);
-    /* Subtle lift shadow - ink based */
-    box-shadow: 0 16px 32px -12px hsl(var(--obsidian) / 0.5);
+    box-shadow: 0 16px 32px -12px hsl(var(--gold) / 0.12);
     z-index: 10;
   }
   
@@ -279,18 +258,17 @@
     }
   }
   
-  /* Gold shimmer on spine: rare, ceremonial top accent */
   .volume-spine::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(
       90deg,
       transparent,
-      hsl(var(--gold) / 0.4),
+      hsl(var(--gold) / 0.3),
       transparent
     );
     opacity: 0;
@@ -358,12 +336,12 @@
     display: none;
   }
   
-  /* Gold Accent Glow - ceremonial, rare use */
+  /* Gold Accent Glow */
   .glow-gold {
-    box-shadow: 0 0 30px -10px hsl(var(--gold) / 0.25);
+    box-shadow: 0 0 30px -10px hsl(var(--gold) / 0.3);
   }
   
-  /* Archival Link - ink based hover, gold underline as accent only */
+  /* Archival Link */
   .link-archival {
     @apply relative inline-block text-ui;
     color: hsl(var(--muted-foreground));
@@ -377,8 +355,7 @@
     left: 0;
     width: 0;
     height: 1px;
-    /* Ink-based underline, not gold */
-    background: hsl(var(--foreground));
+    background: hsl(var(--gold));
     transition: width var(--duration-medium) var(--ease-refined);
   }
   

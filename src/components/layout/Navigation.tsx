@@ -29,13 +29,13 @@ export const Navigation = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
         <nav className="flex items-center justify-between px-6 md:px-12 h-16">
-          {/* Logo - muted separator, not gold/accent */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="flex items-center">
               <span className="text-display text-lg tracking-wider text-foreground">
                 FANG
               </span>
-              <span className="mx-2 text-muted-foreground">&</span>
+              <span className="mx-2 opacity-60 text-accent">&</span>
               <span className="text-display text-lg tracking-wider text-foreground">
                 FLEECE
               </span>

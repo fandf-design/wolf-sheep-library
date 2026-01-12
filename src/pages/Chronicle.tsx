@@ -27,16 +27,14 @@ const Chronicle = () => {
               >
                 <Link to={`/chronicle/${chronicle.slug}`} className="block">
                   <div className="flex items-center gap-4 mb-4">
-                    {/* Category: muted foreground, not gold */}
-                    <span className="text-meta text-muted-foreground">{chronicle.category}</span>
-                    <span className="text-meta text-muted-foreground/60">•</span>
-                    <span className="text-meta text-muted-foreground/60">{chronicle.date}</span>
-                    <span className="text-meta text-muted-foreground/60">•</span>
-                    <span className="text-meta text-muted-foreground/60">{chronicle.readTime}</span>
+                    <span className="text-meta text-gold/60">{chronicle.category}</span>
+                    <span className="text-meta text-muted-foreground">•</span>
+                    <span className="text-meta text-muted-foreground">{chronicle.date}</span>
+                    <span className="text-meta text-muted-foreground">•</span>
+                    <span className="text-meta text-muted-foreground">{chronicle.readTime}</span>
                   </div>
                   
-                  {/* Hover: foreground ink, not gold */}
-                  <h2 className="text-display-md text-foreground/90 group-hover:text-foreground transition-colors mb-4">
+                  <h2 className="text-display-md text-foreground group-hover:text-gold transition-colors mb-4">
                     {chronicle.title}
                   </h2>
                   
@@ -44,8 +42,7 @@ const Chronicle = () => {
                     {chronicle.excerpt}
                   </p>
                   
-                  {/* CTA hover: foreground, not gold */}
-                  <span className="inline-block mt-6 text-ui text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="inline-block mt-6 text-ui text-muted-foreground group-hover:text-gold transition-colors">
                     Read Entry →
                   </span>
                 </Link>
@@ -69,10 +66,9 @@ const Chronicle = () => {
             <input 
               type="email" 
               placeholder="your@email.com"
-              className="flex-1 bg-transparent border border-border px-4 py-3 text-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              className="flex-1 bg-transparent border border-border px-4 py-3 text-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 transition-colors"
             />
-            {/* Button hover: muted, not gold */}
-            <button className="px-6 py-3 bg-foreground text-background text-ui hover:bg-foreground/80 transition-colors">
+            <button className="px-6 py-3 bg-foreground text-background text-ui hover:bg-gold hover:text-background transition-colors">
               Subscribe
             </button>
           </div>

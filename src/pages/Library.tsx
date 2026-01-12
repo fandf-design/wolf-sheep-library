@@ -72,8 +72,7 @@ const Library = () => {
         {/* Scroll Progress Indicator */}
         <div className="px-6 md:px-12 mt-6">
           <div className="h-px bg-border relative max-w-md">
-            {/* Progress bar: foreground ink, not gold */}
-            <div className="absolute top-0 left-0 h-px bg-foreground/60 transition-all duration-300" style={{
+            <div className="absolute top-0 left-0 h-px bg-gold transition-all duration-300" style={{
             width: `${scrollProgress * 100}%`
           }} />
           </div>
@@ -99,7 +98,7 @@ const Library = () => {
             <div className="md:col-span-2">
               <div className="flex items-center mb-6">
                 <span className="text-display text-lg tracking-wider">FANG</span>
-                <span className="mx-2 text-muted-foreground">&</span>
+                <span className="mx-2 text-gold/60">&</span>
                 <span className="text-display text-lg tracking-wider">FLEECE</span>
               </div>
               <p className="text-body-sm text-muted-foreground max-w-sm">
