@@ -44,25 +44,15 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-12">
-            {navItems.map(item => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link 
-                  key={item.path} 
-                  to={item.path} 
-                  className={`link-archival transition-colors ${
-                    isActive 
-                      ? "text-active-text border-b-2 border-active-border pb-0.5" 
-                      : item.label === "Library" 
-                        ? "text-muted-foreground/90 hover:text-link-hover-text" 
-                        : "text-muted-foreground/70 hover:text-link-hover-text"
-                  }`}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            {navItems.map(item => (
+              <Link 
+                key={item.path} 
+                to={item.path} 
+                className={`link-archival ${location.pathname === item.path ? "text-foreground" : item.label === "Library" ? "text-muted-foreground/90" : "text-muted-foreground/70"}`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           {/* Actions */}
@@ -129,26 +119,18 @@ export const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border animate-fade-in">
             <div className="flex flex-col p-6 gap-6">
-              {navItems.map(item => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link 
-                    key={item.path} 
-                    to={item.path} 
-                    onClick={() => setIsMenuOpen(false)} 
-                    className={`text-ui relative pl-3 ${
-                      isActive 
-                        ? "text-active-text bg-active-bg border-l-2 border-active-border" 
-                        : "text-muted-foreground hover:text-link-hover-text hover:bg-link-hover-bg"
-                    }`}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <div className="border-t border-rule pt-6 flex flex-col gap-4">
-                <Link to="/shelf" onClick={() => setIsMenuOpen(false)} className="text-ui text-muted-foreground pl-3 hover:text-link-hover-text hover:bg-link-hover-bg">
+              {navItems.map(item => (
+                <Link 
+                  key={item.path} 
+                  to={item.path} 
+                  onClick={() => setIsMenuOpen(false)} 
+                  className={`text-ui ${location.pathname === item.path ? "text-foreground" : "text-muted-foreground"}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="border-t border-border pt-6 flex flex-col gap-4">
+                <Link to="/shelf" onClick={() => setIsMenuOpen(false)} className="text-ui text-muted-foreground">
                   Shelf
                 </Link>
                 <div className="pt-2">

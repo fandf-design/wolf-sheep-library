@@ -35,7 +35,7 @@ export const VolumeSpine = ({
     <>
       {/* Volume Number */}
       <div className="absolute top-6 left-6 flex items-center gap-2">
-        <span className={`text-meta ${isAccessible ? 'text-accent group-hover:text-marker-active' : 'text-muted-foreground/30'}`}>
+        <span className={`text-meta ${isAccessible ? 'text-accent/70' : 'text-muted-foreground/30'}`}>
           Volume {number}
         </span>
         {!isAccessible && (
@@ -55,8 +55,8 @@ export const VolumeSpine = ({
       {/* Decorative Line */}
       <div className={`absolute top-16 left-6 right-6 h-px bg-gradient-to-r ${
         isAccessible 
-          ? 'from-rule via-accent/20 to-transparent group-hover:via-marker-active/30' 
-          : 'from-rule/50 via-muted-foreground/10 to-transparent'
+          ? 'from-border via-accent/20 to-transparent' 
+          : 'from-border/50 via-muted-foreground/10 to-transparent'
       }`} />
 
       {/* Sigil/Symbol Area */}
@@ -65,7 +65,7 @@ export const VolumeSpine = ({
           ? 'opacity-10 group-hover:opacity-20' 
           : 'opacity-5'
       }`}>
-        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className={isAccessible ? 'text-accent group-hover:text-marker-active' : 'text-muted-foreground'}>
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className={isAccessible ? 'text-accent' : 'text-muted-foreground'}>
           <circle cx="30" cy="30" r="28" stroke="currentColor" strokeWidth="0.5" />
           <circle cx="30" cy="30" r="20" stroke="currentColor" strokeWidth="0.5" />
           <line x1="30" y1="2" x2="30" y2="58" stroke="currentColor" strokeWidth="0.5" />
@@ -75,23 +75,23 @@ export const VolumeSpine = ({
 
       {/* Content */}
       <div className="relative z-10 space-y-3">
-        <h3 className={`text-display-md ${isAccessible ? 'text-foreground group-hover:text-active-text' : 'text-muted-foreground/60'}`}>
+        <h3 className={`text-display-md ${isAccessible ? 'text-foreground' : 'text-muted-foreground/60'}`}>
           {title}
         </h3>
         <p className={`text-body-sm leading-relaxed ${isAccessible ? 'text-muted-foreground' : 'text-muted-foreground/40'}`}>
           {subtitle}
         </p>
-        <div className="pt-4 border-t border-rule/50 group-hover:border-rule-emphasis/30">
+        <div className="pt-4 border-t border-border/50">
           <span className={`text-meta ${isAccessible ? '' : 'text-muted-foreground/40'}`}>
             {tension}
           </span>
         </div>
       </div>
 
-      {/* Hover Indicator - uses accent tokens */}
+      {/* Hover Indicator */}
       <div className={`absolute bottom-0 left-0 right-0 h-px transition-colors ${
         isAccessible 
-          ? 'bg-transparent group-hover:bg-marker-active/40' 
+          ? 'bg-accent/0 group-hover:bg-accent/40' 
           : 'bg-transparent'
       }`} />
     </>
