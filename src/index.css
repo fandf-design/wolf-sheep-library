@@ -80,83 +80,152 @@
   }
 
   .light {
-    /* Paper + ink */
-    --background: 40 28% 96%;          /* parchment */
-    --foreground: 240 10% 8%;          /* deep ink - strengthened */
+    /* ═══════════════════════════════════════════════════════════════
+       PARCHMENT THEME: Ink + Midnight Blue
+       Ink provides all critical legibility.
+       Midnight blue marks structure, annotation, and interaction.
+       ═══════════════════════════════════════════════════════════════ */
     
-    /* Surfaces */
-    --card: 40 20% 91%;
-    --card-foreground: 240 10% 8%;
-    --popover: 40 26% 95%;
-    --popover-foreground: 240 10% 8%;
+    /* Core Surfaces (warm parchment hierarchy) */
+    --background: 40 26% 97%;           /* primary parchment */
+    --card: 40 20% 93%;                 /* elevated parchment */
+    --popover: 40 18% 94%;              /* floating parchment */
+    --muted: 40 14% 90%;                /* subdued surface */
+    --secondary: 40 16% 89%;            /* secondary surface */
     
-    /* Primary UI */
-    --primary: 240 10% 8%;
-    --primary-foreground: 40 28% 96%;
+    /* Text System (Ink - 220° hue, authoritative) */
+    --foreground: 220 12% 7%;           /* primary ink */
+    --card-foreground: 220 12% 7%;      /* ink on card */
+    --popover-foreground: 220 12% 7%;   /* ink on popover */
+    --secondary-foreground: 220 14% 14%; /* ink on secondary */
+    --muted-foreground: 220 10% 32%;    /* metadata ink */
     
-    /* Secondary UI */
-    --secondary: 40 18% 89%;
-    --secondary-foreground: 240 10% 16%;
+    /* Primary Action (Ink authority) */
+    --primary: 220 12% 7%;              /* primary actions use ink */
+    --primary-foreground: 40 26% 97%;   /* parchment on ink */
     
-    /* Muted (must remain readable) */
-    --muted: 40 12% 89%;
-    --muted-foreground: 240 9% 28%;
+    /* Borders & Structure (diluted ink) */
+    --border: 220 8% 72%;               /* structural rules */
+    --input: 220 8% 70%;                /* form borders */
     
-    /* Accent (quiet bullion, not web-yellow) */
-    --accent: 43 36% 34%;
-    --accent-foreground: 40 28% 96%;
+    /* Accent System (Midnight Blue - ink-adjacent) */
+    --accent: 210 22% 24%;              /* midnight blue */
+    --accent-foreground: 40 26% 97%;    /* parchment on blue */
+    --ring: 210 22% 24%;                /* focus ring */
     
-    /* Structural lines + inputs - strengthened */
-    --border: 240 8% 68%;
-    --input: 240 8% 68%;
-    --ring: 240 10% 8%;                 /* ink primary for focus */
+    /* Link Colors */
+    --link: 220 12% 7%;                 /* default link (ink) */
+    --link-hover: 210 22% 24%;          /* hover state (midnight blue) */
+    --link-visited: 220 10% 32%;        /* visited (muted ink) */
     
-    /* Optional: link colors */
-    --link: 240 10% 8%;
-    --link-hover: 43 36% 34%;
+    /* Status & Feedback */
+    --destructive: 0 58% 32%;           /* muted red */
+    --destructive-foreground: 40 26% 97%;
+    --success: 140 28% 28%;             /* muted green */
+    --warning: 35 65% 42%;              /* amber */
   }
 
-  /* Light theme status pills — archival, never black */
+  /* ═══════════════════════════════════════════════════════════════
+     LIGHT THEME COMPONENT OVERRIDES
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Status Pills & Badges */
   .light .status-pill,
   .light .badge,
   .light .chip {
-    background: hsl(40 16% 88%);
-    color: hsl(240 10% 22%);
-    border: 1px solid hsl(240 8% 68%);
+    background: hsl(40 14% 90%);
+    color: hsl(220 12% 18%);
+    border: 1px solid hsl(220 8% 72%);
+  }
+
+  .light .badge--active,
+  .light .status-pill--active {
+    border-color: hsl(210 22% 24%); /* blue when active */
   }
 
   .light .status-pill--published,
   .light .badge--published {
     background: transparent;
-    color: hsl(240 10% 20%);
-    border: 1px solid hsl(240 8% 68%);
+    color: hsl(220 12% 18%);
+    border: 1px solid hsl(220 8% 72%);
   }
 
-  /* Light theme dividers: visible but not loud */
+  /* Dividers */
   .light hr,
   .light .divider {
-    border-color: hsl(240 8% 68%);
+    border-color: hsl(220 8% 72%);
   }
 
-  /* Light theme focus ring system - ink primary, gold reinforcement */
+  .light .divider--emphasis {
+    border-color: hsl(210 22% 24%); /* blue for semantic weight */
+  }
+
+  /* Focus Ring System - ink primary, blue reinforcement */
   .light *:focus-visible {
-    outline: 2px solid hsl(240 10% 8%);
+    outline: 2px solid hsl(220 12% 7%);
     outline-offset: 2px;
-    box-shadow: inset 0 0 0 1px hsl(43 36% 34%);
+    box-shadow: inset 0 0 0 1px hsl(210 22% 24%);
   }
 
-  /* Light theme hover states - background change, not gold-only */
-  .light button:hover:not(:disabled),
+  /* Hover States */
+  .light button:hover:not(:disabled) {
+    background-color: hsl(40 22% 95%);
+  }
+
   .light a:hover {
-    background-color: hsl(40 24% 94%);
+    color: hsl(210 22% 24%);
   }
 
-  /* Light theme active/selected states - ink indicator */
+  /* Active/Selected States - ink indicator with blue option */
   .light .active,
   .light [aria-current="page"] {
-    background: hsl(40 18% 92%);
-    color: hsl(240 10% 8%);
-    border-left: 3px solid hsl(240 10% 8%);
+    background: hsl(40 16% 89%);
+    color: hsl(220 12% 7%);
+    border-left: 3px solid hsl(210 22% 24%);
+  }
+
+  /* Form Inputs */
+  .light input,
+  .light textarea,
+  .light select {
+    background: hsl(40 26% 97%);
+    border: 1px solid hsl(220 8% 70%);
+    color: hsl(220 12% 7%);
+  }
+
+  .light input:focus,
+  .light textarea:focus,
+  .light select:focus {
+    outline: 2px solid hsl(220 12% 7%);
+    box-shadow: inset 0 0 0 1px hsl(210 22% 24%);
+  }
+
+  /* Button Overrides */
+  .light .button-primary {
+    background: hsl(220 12% 7%);
+    color: hsl(40 26% 97%);
+  }
+
+  .light .button-primary:hover {
+    background: hsl(220 14% 12%);
+  }
+
+  .light .button-secondary {
+    background: transparent;
+    border: 1px solid hsl(220 8% 72%);
+    color: hsl(220 12% 7%);
+  }
+
+  .light .button-secondary:hover {
+    background: hsl(40 18% 94%);
+    border-color: hsl(210 22% 24%);
+  }
+
+  /* Selected States (checkboxes, radio, tabs) */
+  .light [data-state="checked"],
+  .light [aria-selected="true"] {
+    border-color: hsl(210 22% 24%);
+    background: hsl(40 18% 94%);
   }
 }
 
@@ -184,8 +253,8 @@
   }
 
   .light ::selection {
-    background: hsl(var(--accent) / 0.2);
-    color: hsl(var(--foreground));
+    background: hsl(210 22% 24% / 0.2);
+    color: hsl(220 12% 7%);
   }
 }
 
@@ -388,9 +457,17 @@
     transition: width var(--duration-medium) var(--ease-refined);
   }
 
-  /* Light theme: archival links use ink underline, not gold */
+  /* Light theme: archival links use ink, midnight blue on hover */
   .light .link-archival::after {
-    background: hsl(var(--foreground));
+    background: hsl(220 12% 7%);
+  }
+
+  .light .link-archival:hover {
+    color: hsl(210 22% 24%);
+  }
+
+  .light .link-archival:hover::after {
+    background: hsl(210 22% 24%);
   }
   
   .link-archival:hover {
