@@ -77,6 +77,39 @@
     --accent-foreground: var(--obsidian);
     --border: 240 4% 15%;
     --input: 240 4% 15%;
+    
+    /* Accent System (Dark Theme - Gold) */
+    --accent-muted: 43 40% 45%;
+    --accent-subtle: 43 20% 12%;
+    
+    /* Focus Ring System (Dark) */
+    --ring: var(--gold);
+    --ring-accent: var(--gold);
+    --ring-offset: var(--obsidian);
+    
+    /* Active State Tokens (Dark) */
+    --active-bg: 240 4% 12%;
+    --active-border: var(--gold);
+    --active-text: var(--bone);
+    
+    /* Selected State Tokens (Dark) */
+    --selected-bg: 240 4% 10%;
+    --selected-border: var(--gold);
+    --selected-text: var(--bone);
+    --selected-indicator: var(--bone);
+    
+    /* Link Hover Tokens (Dark) */
+    --link: var(--bone);
+    --link-hover-bg: 240 4% 8%;
+    --link-hover-text: var(--gold);
+    --link-hover-underline: var(--gold);
+    --link-visited: 40 10% 55%;
+    
+    /* Section Rules & Markers (Dark) */
+    --rule-default: 240 4% 15%;
+    --rule-emphasis: var(--gold);
+    --marker-active: var(--gold);
+    --marker-dot: var(--bone);
   }
 
   .light {
@@ -111,10 +144,43 @@
     --border: 220 8% 72%;               /* structural rules */
     --input: 220 8% 70%;                /* form borders */
     
-    /* Accent System (Midnight Blue - ink-adjacent) */
-    --accent: 210 22% 24%;              /* midnight blue */
-    --accent-foreground: 40 26% 97%;    /* parchment on blue */
-    --ring: 210 22% 24%;                /* focus ring */
+    /* ═══════════════════════════════════════════════════════════════
+       ACCENT SYSTEM (Midnight Blue)
+       Blue is always paired with ink contrast for immediate legibility.
+       ═══════════════════════════════════════════════════════════════ */
+    
+    /* Core Accent Token */
+    --accent: 210 22% 24%;              /* midnight blue base */
+    --accent-foreground: 40 26% 97%;    /* parchment on blue (14:1 contrast) */
+    --accent-muted: 210 18% 34%;        /* subdued blue for secondary emphasis */
+    --accent-subtle: 210 16% 92%;       /* blue-tinted surface (near parchment) */
+    
+    /* Focus Ring System */
+    --ring: 220 12% 7%;                 /* ink primary ring */
+    --ring-accent: 210 22% 24%;         /* blue reinforcement ring */
+    --ring-offset: 40 26% 97%;          /* parchment offset */
+    
+    /* Active State Tokens */
+    --active-bg: 40 16% 89%;            /* warm surface for active state */
+    --active-border: 210 22% 24%;       /* blue indicator */
+    --active-text: 220 12% 7%;          /* ink for legibility */
+    
+    /* Selected State Tokens */
+    --selected-bg: 40 18% 94%;          /* elevated parchment */
+    --selected-border: 210 22% 24%;     /* blue border */
+    --selected-text: 220 12% 7%;        /* ink text */
+    --selected-indicator: 220 12% 7%;   /* ink checkmark/indicator */
+    
+    /* Link Hover Tokens */
+    --link-hover-bg: 40 22% 95%;        /* subtle parchment lift */
+    --link-hover-text: 210 22% 24%;     /* blue text */
+    --link-hover-underline: 210 22% 24%; /* blue underline */
+    
+    /* Section Rules & Markers */
+    --rule-default: 220 8% 72%;         /* diluted ink for standard rules */
+    --rule-emphasis: 210 22% 24%;       /* blue for semantic emphasis */
+    --marker-active: 210 22% 24%;       /* blue marker for current item */
+    --marker-dot: 220 12% 7%;           /* ink dot indicator */
     
     /* Link Colors */
     --link: 220 12% 7%;                 /* default link (ink) */
@@ -163,28 +229,130 @@
     border-color: hsl(210 22% 24%); /* blue for semantic weight */
   }
 
-  /* Focus Ring System - ink primary, blue reinforcement */
+  /* ═══════════════════════════════════════════════════════════════
+     FOCUS RING SYSTEM
+     Ink primary ring, blue reinforcement - always legible
+     ═══════════════════════════════════════════════════════════════ */
   .light *:focus-visible {
-    outline: 2px solid hsl(220 12% 7%);
+    outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    box-shadow: inset 0 0 0 1px hsl(210 22% 24%);
+    box-shadow: 0 0 0 4px hsl(var(--ring-accent) / 0.15);
   }
 
-  /* Hover States */
-  .light button:hover:not(:disabled) {
-    background-color: hsl(40 22% 95%);
+  .light button:focus-visible,
+  .light a:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px hsl(var(--ring-accent) / 0.2);
   }
 
+  /* ═══════════════════════════════════════════════════════════════
+     LINK HOVER STATES
+     Blue text with optional background lift
+     ═══════════════════════════════════════════════════════════════ */
   .light a:hover {
-    color: hsl(210 22% 24%);
+    color: hsl(var(--link-hover-text));
   }
 
-  /* Active/Selected States - ink indicator with blue option */
+  .light a:hover:not(.no-underline) {
+    text-decoration-color: hsl(var(--link-hover-underline));
+  }
+
+  .light .link-block:hover {
+    background-color: hsl(var(--link-hover-bg));
+    color: hsl(var(--link-hover-text));
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     ACTIVE STATES
+     Warm background + blue marker + ink text
+     ═══════════════════════════════════════════════════════════════ */
   .light .active,
   .light [aria-current="page"] {
-    background: hsl(40 16% 89%);
-    color: hsl(220 12% 7%);
-    border-left: 3px solid hsl(210 22% 24%);
+    background: hsl(var(--active-bg));
+    color: hsl(var(--active-text));
+    border-left: 3px solid hsl(var(--active-border));
+  }
+
+  .light .active-subtle {
+    background: hsl(var(--active-bg) / 0.5);
+    color: hsl(var(--active-text));
+  }
+
+  .light .active-marker::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: hsl(var(--marker-active));
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     SELECTED STATES
+     Blue border + warm surface + ink indicator
+     ═══════════════════════════════════════════════════════════════ */
+  .light [data-state="checked"],
+  .light [aria-selected="true"],
+  .light .selected {
+    border-color: hsl(var(--selected-border));
+    background: hsl(var(--selected-bg));
+    color: hsl(var(--selected-text));
+  }
+
+  .light [data-state="checked"]::after,
+  .light .selected-indicator {
+    color: hsl(var(--selected-indicator));
+  }
+
+  .light .selected-tab {
+    background: hsl(var(--selected-bg));
+    border-bottom: 2px solid hsl(var(--selected-border));
+    color: hsl(var(--selected-text));
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     SECTION RULES & MARKERS
+     Diluted ink for structure, blue for emphasis
+     ═══════════════════════════════════════════════════════════════ */
+  .light hr,
+  .light .rule {
+    border-color: hsl(var(--rule-default));
+  }
+
+  .light .rule-emphasis,
+  .light hr.emphasis {
+    border-color: hsl(var(--rule-emphasis));
+  }
+
+  .light .marker-dot::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: hsl(var(--marker-dot));
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .light .marker-blue::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: hsl(var(--marker-active));
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     BUTTON HOVER STATES
+     ═══════════════════════════════════════════════════════════════ */
+  .light button:hover:not(:disabled) {
+    background-color: hsl(var(--link-hover-bg));
   }
 
   /* Form Inputs */

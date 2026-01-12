@@ -52,6 +52,41 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          muted: "hsl(var(--accent-muted))",
+          subtle: "hsl(var(--accent-subtle))",
+        },
+        ring: {
+          DEFAULT: "hsl(var(--ring))",
+          accent: "hsl(var(--ring-accent))",
+          offset: "hsl(var(--ring-offset))",
+        },
+        active: {
+          bg: "hsl(var(--active-bg))",
+          border: "hsl(var(--active-border))",
+          text: "hsl(var(--active-text))",
+        },
+        selected: {
+          bg: "hsl(var(--selected-bg))",
+          border: "hsl(var(--selected-border))",
+          text: "hsl(var(--selected-text))",
+          indicator: "hsl(var(--selected-indicator))",
+        },
+        link: {
+          DEFAULT: "hsl(var(--link))",
+          hover: {
+            bg: "hsl(var(--link-hover-bg))",
+            text: "hsl(var(--link-hover-text))",
+            underline: "hsl(var(--link-hover-underline))",
+          },
+          visited: "hsl(var(--link-visited))",
+        },
+        rule: {
+          DEFAULT: "hsl(var(--rule-default))",
+          emphasis: "hsl(var(--rule-emphasis))",
+        },
+        marker: {
+          active: "hsl(var(--marker-active))",
+          dot: "hsl(var(--marker-dot))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
