@@ -80,40 +80,48 @@
   }
 
   .light {
-    /* Paper + ink */
-    --background: 40 28% 96%;          /* parchment */
-    --foreground: 240 10% 8%;          /* deep ink */
+    /* Parchment theme - derived from dark theme inversion */
     
-    /* Surfaces */
+    /* Surfaces: obsidian → parchment */
+    --background: 40 28% 96%;          /* parchment */
+    --foreground: 240 10% 8%;          /* ink */
+    
+    /* Cards: lift down (darker) instead of up */
     --card: 40 20% 91%;
     --card-foreground: 240 10% 8%;
-    --popover: 40 26% 95%;
+    
+    /* Popovers: match card logic */
+    --popover: 40 20% 91%;
     --popover-foreground: 240 10% 8%;
     
-    /* Primary UI */
+    /* Primary: ink on parchment */
     --primary: 240 10% 8%;
     --primary-foreground: 40 28% 96%;
     
-    /* Secondary UI */
-    --secondary: 40 18% 89%;
+    /* Secondary: warm structural gray */
+    --secondary: 40 16% 85%;
     --secondary-foreground: 240 10% 16%;
     
-    /* Muted (must remain readable) */
+    /* Muted: subordinate surfaces */
     --muted: 40 12% 89%;
     --muted-foreground: 240 9% 28%;
     
-    /* Accent (midnight blue - editorial ink, not gold) */
+    /* Accent: midnight blue (replaces gold) */
     --accent: 210 18% 25%;
     --accent-foreground: 40 28% 96%;
     
-    /* Structural lines + inputs */
+    /* Destructive: preserved */
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 40 28% 96%;
+    
+    /* Structural lines: archival rules */
     --border: 240 8% 68%;
     --input: 240 8% 68%;
-    --ring: 210 18% 25%;               /* midnight blue for focus */
+    --ring: 210 18% 25%;               /* midnight blue */
     
     /* Link colors */
     --link: 240 10% 8%;
-    --link-hover: 210 18% 25%;         /* midnight blue */
+    --link-hover: 210 18% 25%;
   }
 
   /* Light theme status pills — archival, never black */
