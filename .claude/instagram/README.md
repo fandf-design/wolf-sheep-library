@@ -11,12 +11,12 @@ They load automatically when Claude Code is opened in this repo. Type `/ig-reel`
 
 | file | written by | read by |
 | --- | --- | --- |
-| `voice.md` | you (drafted from site copy, TODOs left) | every skill |
+| `voice.md` | you (drafted from site copy, completed with the brand) | every skill |
 | `swipe.md` | `/ig-viral` | `/ig-reel`, `/ig-plan` |
 | `plan.md` | `/ig-plan` | the other skills |
 | `log.md` | `/ig-reel`, `/ig-comment` on approval | `/ig-audit`, `/ig-plan` |
 
-Fill in the **TODO** lines in `voice.md` before the first real use.
+The one open item in `voice.md` is the units and sell-through figure for each Volume. Add it as each Volume ships.
 
 ## Source and changes
 

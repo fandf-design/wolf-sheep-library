@@ -2,8 +2,8 @@
 
 Every `/ig-*` skill in `.claude/skills/` reads this file first. It was drafted
 from the copy already on the site (`src/data/volumes.ts`, `src/data/chronicles.ts`,
-`src/pages/*`). Anything marked **TODO** could not be found in the repo and must
-be filled in by a person. The skills never invent it: a draft that needs a
+`src/pages/*`). It was then completed with the brand. Anything still marked
+**TODO** must be filled in by a person. The skills never invent it: a draft that needs a
 missing fact comes back with `{{your number}}` in it.
 
 ---
@@ -11,16 +11,20 @@ missing fact comes back with `{{your number}}` in it.
 ## Who we are
 
 - **Name:** Fang & Fleece
-- **Handle:** TODO (the site meta uses `@fangfleece` on X; confirm the Instagram handle)
+- **Handle:** `@fangandfleece`, the same on every platform.
 - **What we do, in one sentence:** Clothing released as numbered "Volumes" and
   "Chapters", where each collection is written like a book and each garment is
   an artifact in it.
 - **Core idea:** "Wolf and sheep are not opposites. They are the same creature
   viewed from different distances. Step closer, and the wool reveals teeth.
   Step back, and the fangs become fleece."
-- **Who we are talking to:** TODO (be specific. A guess from the copy: people
-  who buy a few expensive pieces a year, care how a thing is made, and read
-  the label. Confirm or replace.)
+- **Who we are talking to:** Three overlapping groups. Write for the first and
+  let the other two find their way in:
+  1. **Considered buyers.** They buy a few expensive pieces a year, care how a
+     thing is made, and read the label.
+  2. **The dark-fashion niche.** Drawn by the aesthetic and the mythology first.
+  3. **Collectors.** They treat Volumes as limited editions and want numbered
+     releases, archive pieces and early access.
 - **What we sell:** Outerwear, knitwear, shirts and nightwear in limited
   Volumes, sold through the Shopify store. Volumes can be locked before release
   ("You'll be notified when this Volume enters circulation").
@@ -38,16 +42,17 @@ missing fact comes back with `{{your number}}` in it.
 - **Register:** Two modes, and the good posts use both. Mythic and literary for
   the idea (wolf, sheep, chains, the hunt, the omega). Flat, factual and short
   for the making (fibre, weight, hours, method).
-- **On camera:** TODO (face / faceless / hands only / voiceover). The copy
-  suggests faceless: garments, hands, fabric, low light.
+- **On camera:** Mostly faceless: garments, hands, fabric, process, low
+  light, with voiceover or text on screen. The founder appears on camera for
+  launches and the making-of.
 - **Words we actually use:** volume, chapter, chronicle, collector, artifact,
   library, circulation, restraint, tension, drape, construction, hand-finished.
 - **Words we would never use:** "drop", "fit check", "obsessed", "must-have",
   "elevate your wardrobe", "game-changer", "link in bio 🔥".
 - **Swearing:** no.
-- **Emoji in captions:** never (TODO: confirm).
-- **Pace:** TODO. Literary voiceover reads slow; time a script and pass
-  `--wpm` to `beats.py`. 140 is a reasonable start for this register.
+- **Emoji in captions:** never.
+- **Pace:** 165 wpm, the `beats.py` default. Re-time at the real pace once
+  a voiceover has been recorded.
 
 ### House rules the humanizer should respect
 
@@ -72,12 +77,16 @@ Things we believe that some of the audience does not. Reels come from these.
 2. Restraint is a form of power. ("Garments that whisper rather than shout.")
 3. Some garments should be designed to age, tear and change with wear, not to
    stay new.
-4. TODO
+4. A garment needs a story to be worth wearing. Trend alone is not a reason.
 
 ## Off limits
 
-- **Topics:** TODO
-- **Suppliers, mills, numbers or names we cannot say publicly:** TODO
+- **Topics:** Discounts, sales, markdowns and promo codes. Never.
+- **Prices:** Never in a caption, Reel, carousel or story. Prices live on the
+  site. (`/ig-reel` likes "numbers over adjectives": use hours, microns,
+  weights and units instead of money.)
+- **Suppliers:** Never name a mill, farm or factory. Say where a fibre comes
+  from ("New Zealand", "the Scottish highlands"), never who supplied it.
 - **Claims we are not allowed to make:** Do not call anything "sustainable",
   "ethical" or "eco" beyond what is already on the product page ("Horn buttons
   sourced from ethical farms") without proof. Those words carry advertising
@@ -94,15 +103,20 @@ Facts already on the site. Use these word for word; do not round them up.
 - Mulberry silk, 22 momme.
 - Heavy wool-cashmere blend from the Scottish highlands, lined in silk charmeuse.
 - Mother-of-pearl buttons, French seams throughout.
-- TODO: units per Volume, sell-through, a customer story you have permission
-  to tell.
+- **Units per Volume** and **sell-through** may be used publicly, but only
+  the real figure for that Volume. TODO: record them here per Volume, e.g.
+  `Volume I: {{units}} made, sold out in {{days}}`. Until a line exists, drafts
+  carry `{{your number}}`.
+- No customer stories yet. Add one here only once the customer has agreed.
 
 ## The ask
 
-- **Keyword CTA:** TODO (one word, sayable. Something like `VOLUME` fits.)
-- **What the keyword sends them:** TODO (e.g. the release date for the next
-  Volume, or the alert sign-up for a locked one)
-- **Where the bio link goes:** TODO (the Library page is the natural door)
+- **Keyword CTA:** `LIBRARY`. Say it in the video as well as the caption:
+  "Comment LIBRARY."
+- **What the keyword sends them:** Changes with each post, and each post says
+  what it sends. Every draft that uses the keyword has to name its gift, and
+  the DM sends that gift first, with no question before it (see `/ig-dm`).
+- **Where the bio link goes:** https://fangandfleece.com/ (the homepage).
 
 ## Product brand notes for the pack
 
